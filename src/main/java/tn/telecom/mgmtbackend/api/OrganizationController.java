@@ -43,11 +43,12 @@ public class OrganizationController {
                                  @Nullable @RequestParam("region")String region,
                                  @Nullable @RequestParam("address")String address,
                                  @Nullable @RequestParam("phone")String phone,
+                                 @Nullable @RequestParam("admin")String admin,
                                  @Nullable @RequestParam("directorFirstName") String directorFirstName,
                                  @Nullable @RequestParam("directorLastName") String directorLastName,
                                  @Nullable @RequestParam("directorPhone")String directorPhone,
                                  @Nullable @RequestParam("directorEmail") String directorEmail)throws Exception{
-        organizationService.saveOrganization(name, code, activitySector, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail, document, image);
+        organizationService.saveOrganization(name, code, activitySector, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,admin, document, image);
 
     }
 
