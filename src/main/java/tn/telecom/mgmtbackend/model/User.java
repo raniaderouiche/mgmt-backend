@@ -38,4 +38,8 @@ public class User {
 
     @ManyToMany(fetch=FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="organization_id", referencedColumnName = "id")
+    private Organization organization;
 }

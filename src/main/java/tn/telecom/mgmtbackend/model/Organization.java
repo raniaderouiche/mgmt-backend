@@ -60,16 +60,15 @@ public class Organization {
     private String directorEmail;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="document_id", referencedColumnName = "document")
+    @JoinColumn(name="document_id", referencedColumnName = "id")
     private CustomFile document;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="image_id", referencedColumnName = "image")
+    @JoinColumn(name="image_id", referencedColumnName = "id")
     private CustomFile image;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="admin_id", referencedColumnName = "admin")
-    private User admin;
+    @OneToOne(mappedBy = "organization")
+    private User admin_org;
 
     public Organization(String name, String code, String activitySector, String email,
                         String country, String region, String address, String phone,

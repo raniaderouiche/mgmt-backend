@@ -43,7 +43,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                  directorEmail);
 
         User user = userRepository.findByUsername(admin);
-        organization.setAdmin(user);
+        organization.setAdmin_org(user);
 
         if (image != null) {
             String imageName = StringUtils.cleanPath(image.getOriginalFilename());
@@ -107,7 +107,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     public void activateOrganization(Long id) throws NotFoundException {
         if (this.organizationRepository.existsById(id)) {
             Organization existing_org = organizationRepository.getById(id);
-            User user = userRepository.findByUsername(existing_org.getAdmin().getUsername());
+            User user = userRepository.findByUsername(existing_org.getAdmin_org().getUsername());
             existing_org.setStatus(true);
             user.setIsActive(true);
             organizationRepository.save(existing_org);
