@@ -26,6 +26,7 @@ public class MgmtBackendApplication {
     @Bean
     CommandLineRunner run(UserService userService){
         return args -> {
+            userService.saveRole(new Role(null,"SUPER_ADMIN"));
             userService.saveRole(new Role(null,"ADMIN"));
             userService.saveRole(new Role(null,"USER"));
             User user = new User();
@@ -33,7 +34,7 @@ public class MgmtBackendApplication {
             user.setPassword("admin");
             user.setEmail("rania.derouiche@gmail.com");
             userService.saveUser(user);
-            userService.addRoleToUser("admin","ADMIN");
+            userService.addRoleToUser("admin","SUPER_ADMIN");
         };
     }
 
