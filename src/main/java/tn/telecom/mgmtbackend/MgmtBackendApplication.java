@@ -31,6 +31,7 @@ public class MgmtBackendApplication {
             User user = new User();
             user.setUsername("admin");
             user.setPassword("admin");
+            user.setEmail("rania.derouiche@gmail.com");
             userService.saveUser(user);
             userService.addRoleToUser("admin","ADMIN");
         };
