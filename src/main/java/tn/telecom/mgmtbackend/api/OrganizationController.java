@@ -22,10 +22,11 @@ public class OrganizationController {
         return organizationService.getOrganizations();
     }
 
-    @GetMapping("/active")
-    public List<Organization> getActiveOrganizations(){
-        return organizationService.getActiveOrganizations();
+    @GetMapping("/{id}")
+    public Organization getOrganizationById(@PathVariable(name = "id") Long id) {
+        return organizationService.getOrganizationById(id);
     }
+
 
     @GetMapping("/waitlist")
     public List<Organization> getOrganizationsInWaiting(){
@@ -61,5 +62,7 @@ public class OrganizationController {
     public void activateOrganization(@PathVariable(name = "id") Long id) throws NotFoundException {
         organizationService.activateOrganization(id);
     }
+
+
 
 }

@@ -23,6 +23,7 @@ public class MgmtBackendApplication {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+    /*
     @Bean
     CommandLineRunner run(UserService userService){
         return args -> {
@@ -36,6 +37,6 @@ public class MgmtBackendApplication {
             userService.saveUser(user);
             userService.addRoleToUser("admin","SUPER_ADMIN");
         };
-    }
+    }*/
 
 }

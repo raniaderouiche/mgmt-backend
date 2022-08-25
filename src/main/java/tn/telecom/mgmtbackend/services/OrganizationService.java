@@ -9,6 +9,7 @@ import java.util.List;
 public interface OrganizationService {
 
     List<Organization> getOrganizations();
+    Organization getOrganizationById(Long id);
     void saveOrganization(String name, String code, String activitySector,
                           String email, String country, String region, String address,
                           String phone, String directorFirstName, String directorLastName,

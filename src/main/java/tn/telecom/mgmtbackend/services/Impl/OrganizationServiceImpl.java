@@ -34,6 +34,15 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public Organization getOrganizationById(Long id) {
+        if(this.organizationRepository.findById(id).isPresent()) {
+            return this.organizationRepository.findById(id).get();
+        }else{
+            return null;
+        }
+    }
+
+    @Override
     public void saveOrganization(String name, String code, String activitySector, String email,
                                  String country, String region, String address, String phone,
                                  String directorFirstName, String directorLastName, String directorPhone,
