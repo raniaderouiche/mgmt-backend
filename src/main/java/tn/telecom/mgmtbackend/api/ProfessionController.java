@@ -22,6 +22,7 @@ public class ProfessionController {
 
     @PostMapping("/")
     public void saveProfession(@RequestBody Profession profession){
+        System.out.println(profession);
         professionService.saveProfession(profession);
     }
 

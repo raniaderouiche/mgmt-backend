@@ -22,20 +22,31 @@ public class OrganizationController {
         return organizationService.getOrganizations();
     }
 
-    @GetMapping("/{id}")
-    public Organization getOrganizationById(@PathVariable(name = "id") Long id) {
-        return organizationService.getOrganizationById(id);
+    @GetMapping("/active")
+    public List<Organization> getActiveOrganizations(){
+        return organizationService.getActiveOrganizations();
     }
 
+    @GetMapping("/rejected")
+    public List<Organization> getRejectedOrganizations(){
+        return organizationService.getRejectedOrganizations();
+    }
 
     @GetMapping("/waitlist")
     public List<Organization> getOrganizationsInWaiting(){
         return organizationService.getOrganizationsInWaiting();
     }
 
+    @GetMapping("/{id}")
+    public Organization getOrganizationById(@PathVariable(name = "id") Long id) {
+        return organizationService.getOrganizationById(id);
+    }
+
+
     @PostMapping("/")
     public void saveOrganization(@Nullable @RequestParam(name = "document") MultipartFile document,
                                  @Nullable @RequestParam(name = "image") MultipartFile image,
+                                 @Nullable @RequestParam("sectorId") Long sectorId,
                                  @Nullable @RequestParam("name") String name,
                                  @Nullable @RequestParam("code") String code,
                                  @Nullable @RequestParam("activitySector") String activitySector,
@@ -49,7 +60,28 @@ public class OrganizationController {
                                  @Nullable @RequestParam("directorLastName") String directorLastName,
                                  @Nullable @RequestParam("directorPhone")String directorPhone,
                                  @Nullable @RequestParam("directorEmail") String directorEmail)throws Exception{
-        organizationService.saveOrganization(name, code, activitySector, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,admin, document, image);
+        organizationService.saveOrganization(name, code, sectorId, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,admin, document, image);
+
+    }
+
+    @PutMapping("/")
+    public void updateOrganization(@Nullable @RequestParam(name = "document") MultipartFile document,
+                                 @Nullable @RequestParam(name = "image") MultipartFile image,
+                                 @Nullable @RequestParam("id") Long id,
+                                 @Nullable @RequestParam("sectorId") Long sectorId,
+                                 @Nullable @RequestParam("name") String name,
+                                 @Nullable @RequestParam("code") String code,
+                                 @Nullable @RequestParam("email") String email,
+                                 @Nullable @RequestParam("country") String country,
+                                 @Nullable @RequestParam("region")String region,
+                                 @Nullable @RequestParam("address")String address,
+                                 @Nullable @RequestParam("phone")String phone,
+                                 @Nullable @RequestParam("admin")String admin,
+                                 @Nullable @RequestParam("directorFirstName") String directorFirstName,
+                                 @Nullable @RequestParam("directorLastName") String directorLastName,
+                                 @Nullable @RequestParam("directorPhone")String directorPhone,
+                                 @Nullable @RequestParam("directorEmail") String directorEmail)throws Exception{
+        organizationService.updateOrganization(id, name, code, sectorId, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,admin, document, image);
 
     }
 
@@ -61,6 +93,11 @@ public class OrganizationController {
     @PutMapping("/activate/{id}")
     public void activateOrganization(@PathVariable(name = "id") Long id) throws NotFoundException {
         organizationService.activateOrganization(id);
+    }
+
+    @PutMapping("/reject/{id}")
+    public void rejectOrganization(@PathVariable(name = "id") Long id) throws NotFoundException {
+        organizationService.rejectOrganization(id);
     }
 
 

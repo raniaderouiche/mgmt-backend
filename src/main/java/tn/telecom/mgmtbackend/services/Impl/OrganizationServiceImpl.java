@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
+import tn.telecom.mgmtbackend.model.BusinessSector;
 import tn.telecom.mgmtbackend.model.CustomFile;
 import tn.telecom.mgmtbackend.model.Organization;
 import tn.telecom.mgmtbackend.model.User;
+import tn.telecom.mgmtbackend.repositories.BusinessSectorRepository;
 import tn.telecom.mgmtbackend.repositories.CustomFileRepository;
 import tn.telecom.mgmtbackend.repositories.OrganizationRepository;
 import tn.telecom.mgmtbackend.repositories.UserRepository;
@@ -27,6 +29,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     private CustomFileRepository customFileRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BusinessSectorRepository businessSectorRepository;
 
     @Override
     public List<Organization> getOrganizations() {
@@ -43,12 +47,19 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public void saveOrganization(String name, String code, String activitySector, String email,
+    public void saveOrganization(String name, String code, Long sectorId, String email,
                                  String country, String region, String address, String phone,
                                  String directorFirstName, String directorLastName, String directorPhone,
                                  String directorEmail,String admin, MultipartFile document, MultipartFile image) throws Exception{
 
-        Organization organization = new Organization(name,code,activitySector,email,country,region,address,phone, directorFirstName,  directorLastName,  directorPhone,
+        BusinessSector sector;
+        if(sectorId != null){
+            sector = this.businessSectorRepository.getById(sectorId);
+        }else{
+            sector = null;
+        }
+
+        Organization organization = new Organization(name,code,sector,email,country,region,address,phone, directorFirstName, directorLastName,  directorPhone,
                  directorEmail);
 
         User user = userRepository.findByUsername(admin);
@@ -64,7 +75,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             String documentName = StringUtils.cleanPath(document.getOriginalFilename());
             CustomFile documentFile = new CustomFile(documentName, Base64.getEncoder().encodeToString(document.getBytes()));
             this.customFileRepository.save(documentFile);
-            organization.setImage(documentFile);
+            organization.setDocument(documentFile);
         }
         organizationRepository.save(organization);
 
@@ -85,18 +96,38 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public List<Organization> getRejectedOrganizations() {
+        return organizationRepository.findByStatusIsFalse();
+    }
+
+    @Override
     public List<Organization> getOrganizationsInWaiting() {
         return organizationRepository.findByStatusIsNull();
     }
 
     @Override
-    public void updateOrganization(Organization organization) throws NotFoundException {
+    public void updateOrganization(Long id, String name, String code, Long sectorId, String email,
+                                   String country, String region, String address, String phone,
+                                   String directorFirstName, String directorLastName, String directorPhone,
+                                   String directorEmail, String admin, MultipartFile document, MultipartFile image) throws Exception {
+        BusinessSector sector;
+        if(sectorId != null){
+            sector = this.businessSectorRepository.getById(sectorId);
+        }else{
+            sector = null;
+        }
+
+        Organization organization = new Organization(id,name,code,sector,email,country,region,address,phone, directorFirstName,  directorLastName,  directorPhone,
+                directorEmail);
         Organization existing_org;
         if(organizationRepository.existsById(organization.getId())){
+
+            Long replacedFileId = null;
+
             existing_org = organizationRepository.getById(organization.getId());
             existing_org.setName(organization.getName());
             existing_org.setCode(organization.getCode());
-            existing_org.setActivitySector(organization.getActivitySector());
+            existing_org.setSector(organization.getSector());
             existing_org.setEmail(organization.getEmail());
             existing_org.setCountry(organization.getCountry());
             existing_org.setRegion(organization.getRegion());
@@ -106,7 +137,29 @@ public class OrganizationServiceImpl implements OrganizationService {
             existing_org.setDirectorLastName(organization.getDirectorLastName());
             existing_org.setDirectorPhone(organization.getDirectorPhone());
             existing_org.setDirectorEmail(organization.getDirectorEmail());
+
+            if (document != null) {
+                String documentName = StringUtils.cleanPath(document.getOriginalFilename());
+                CustomFile documentFile = new CustomFile(documentName, Base64.getEncoder().encodeToString(document.getBytes()));
+                this.customFileRepository.save(documentFile);
+                if(existing_org.getDocument() != null){
+                    replacedFileId = existing_org.getDocument().getId();
+                    System.out.println(replacedFileId);
+                }
+                existing_org.setDocument(documentFile);
+            }else {
+                if(existing_org.getDocument() != null){
+                    replacedFileId = existing_org.getDocument().getId();
+                }
+                existing_org.setDocument(null);
+            }
+
             organizationRepository.save(existing_org);
+
+            if (replacedFileId != null) {
+                this.customFileRepository.deleteById(replacedFileId);
+            }
+
         }else {
             throw new NotFoundException();
         }
@@ -116,11 +169,25 @@ public class OrganizationServiceImpl implements OrganizationService {
     public void activateOrganization(Long id) throws NotFoundException {
         if (this.organizationRepository.existsById(id)) {
             Organization existing_org = organizationRepository.getById(id);
-            User user = userRepository.findByUsername(existing_org.getAdmin_org().getUsername());
+            //User user = userRepository.findByUsername(existing_org.getAdmin_org().getUsername());
             existing_org.setStatus(true);
-            user.setIsActive(true);
+            //user.setIsActive(true);
             organizationRepository.save(existing_org);
-            userRepository.save(user);
+            //userRepository.save(user);
+        } else {
+            throw new NotFoundException();
+        }
+    }
+
+    @Override
+    public void rejectOrganization(Long id) throws NotFoundException {
+        if (this.organizationRepository.existsById(id)) {
+            Organization existing_org = organizationRepository.getById(id);
+            //User user = userRepository.findByUsername(existing_org.getAdmin_org().getUsername());
+            existing_org.setStatus(false);
+            //user.setIsActive(true);
+            organizationRepository.save(existing_org);
+            //userRepository.save(user);
         } else {
             throw new NotFoundException();
         }

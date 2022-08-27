@@ -27,8 +27,9 @@ public class Organization {
     @Column(unique = true)
     private String code;
 
-    @NotNull
-    private String activitySector;
+    @ManyToOne
+    @JoinColumn(name="business_sector_id")
+    private BusinessSector sector;
 
     @NotNull
     private String email;
@@ -70,13 +71,32 @@ public class Organization {
     @OneToOne(mappedBy = "organization")
     private User admin_org;
 
-    public Organization(String name, String code, String activitySector, String email,
+    public Organization(Long id, String name, String code, BusinessSector sector, String email,
+                        String country, String region, String address, String phone,
+                        String directorFirstName, String directorLastName, String directorPhone,
+                        String directorEmail){
+        this.id = id;
+        this.name = name;
+        this.code = code;
+        this.sector = sector;
+        this.email = email;
+        this.country = country;
+        this.region = region;
+        this.address = address;
+        this.phone = phone;
+        this.directorFirstName = directorFirstName;
+        this.directorLastName = directorLastName;
+        this.directorPhone = directorPhone;
+        this.directorEmail = directorEmail;
+    }
+
+    public Organization(String name, String code, BusinessSector sector, String email,
                         String country, String region, String address, String phone,
                         String directorFirstName, String directorLastName, String directorPhone,
                         String directorEmail){
         this.name = name;
         this.code = code;
-        this.activitySector = activitySector;
+        this.sector = sector;
         this.email = email;
         this.country = country;
         this.region = region;

@@ -25,4 +25,8 @@ public class BusinessSector {
     @OneToMany(mappedBy = "sector", cascade = CascadeType.ALL)
     @JsonIgnore
     public List<Profession> professions;
+
+    @OneToMany(mappedBy = "sector", cascade = CascadeType.ALL)
+    @JsonIgnore
+    public List<Organization> organizations;
 }
