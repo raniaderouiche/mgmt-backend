@@ -32,6 +32,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     private BusinessSectorRepository businessSectorRepository;
 
+    @Autowired
+    private EmailServiceImpl emailService;
     @Override
     public List<Organization> getOrganizations() {
         return organizationRepository.findAll();
@@ -50,7 +52,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     public void saveOrganization(String name, String code, Long sectorId, String email,
                                  String country, String region, String address, String phone,
                                  String directorFirstName, String directorLastName, String directorPhone,
-                                 String directorEmail,String admin, MultipartFile document, MultipartFile image) throws Exception{
+                                 String directorEmail,Long adminId, MultipartFile document, MultipartFile image) throws Exception{
 
         BusinessSector sector;
         if(sectorId != null){
@@ -62,7 +64,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         Organization organization = new Organization(name,code,sector,email,country,region,address,phone, directorFirstName, directorLastName,  directorPhone,
                  directorEmail);
 
-        User user = userRepository.findByUsername(admin);
+        //it doesnt add the user to organization on database!!
+        User user = userRepository.getById(adminId);
         organization.setAdmin_org(user);
 
         if (image != null) {
@@ -173,7 +176,10 @@ public class OrganizationServiceImpl implements OrganizationService {
             existing_org.setStatus(true);
             //user.setIsActive(true);
             organizationRepository.save(existing_org);
+            System.out.println(existing_org);
+            this.emailService.sendEmail(existing_org.getAdmin_org().getId());
             //userRepository.save(user);
+
         } else {
             throw new NotFoundException();
         }

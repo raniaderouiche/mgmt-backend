@@ -14,7 +14,7 @@ public interface OrganizationService {
     void saveOrganization(String name, String code, Long sectorId,
                           String email, String country, String region, String address,
                           String phone, String directorFirstName, String directorLastName,
-                          String directorPhone, String directorEmail, String admin,
+                          String directorPhone, String directorEmail, Long adminId,
                           MultipartFile document, MultipartFile image) throws Exception;
     void deleteOrganization(Long id) throws NotFoundException;
     List<Organization> getActiveOrganizations();

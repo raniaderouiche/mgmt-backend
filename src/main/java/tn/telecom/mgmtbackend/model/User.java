@@ -35,7 +35,6 @@ public class User {
     private String email;
     private String phone;
     private String address;
-    private String photo;
 
     @ManyToMany(fetch=FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();

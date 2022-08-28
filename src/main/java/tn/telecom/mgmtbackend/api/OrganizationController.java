@@ -47,20 +47,19 @@ public class OrganizationController {
     public void saveOrganization(@Nullable @RequestParam(name = "document") MultipartFile document,
                                  @Nullable @RequestParam(name = "image") MultipartFile image,
                                  @Nullable @RequestParam("sectorId") Long sectorId,
+                                 @Nullable @RequestParam("adminId")Long adminId,
                                  @Nullable @RequestParam("name") String name,
                                  @Nullable @RequestParam("code") String code,
-                                 @Nullable @RequestParam("activitySector") String activitySector,
                                  @Nullable @RequestParam("email") String email,
                                  @Nullable @RequestParam("country") String country,
                                  @Nullable @RequestParam("region")String region,
                                  @Nullable @RequestParam("address")String address,
                                  @Nullable @RequestParam("phone")String phone,
-                                 @Nullable @RequestParam("admin")String admin,
                                  @Nullable @RequestParam("directorFirstName") String directorFirstName,
                                  @Nullable @RequestParam("directorLastName") String directorLastName,
                                  @Nullable @RequestParam("directorPhone")String directorPhone,
                                  @Nullable @RequestParam("directorEmail") String directorEmail)throws Exception{
-        organizationService.saveOrganization(name, code, sectorId, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,admin, document, image);
+        organizationService.saveOrganization(name, code, sectorId, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,adminId, document, image);
 
     }
 
