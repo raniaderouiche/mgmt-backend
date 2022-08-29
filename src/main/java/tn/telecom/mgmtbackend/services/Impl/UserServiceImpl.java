@@ -9,11 +9,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tn.telecom.mgmtbackend.model.Organization;
 import tn.telecom.mgmtbackend.model.Role;
 import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.repositories.RoleRepository;
 import tn.telecom.mgmtbackend.repositories.UserRepository;
 import tn.telecom.mgmtbackend.services.UserService;
+import tn.telecom.mgmtbackend.utils.UserUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -69,4 +71,17 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         return userRepository.findAll();
     }
 
+    @Override
+    public User getUserByToken(String header) {
+        return UserUtils.getUserFromToken(header);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        if(this.userRepository.findById(id).isPresent()) {
+            return this.userRepository.findById(id).get();
+        }else{
+            return null;
+        }
+    }
 }

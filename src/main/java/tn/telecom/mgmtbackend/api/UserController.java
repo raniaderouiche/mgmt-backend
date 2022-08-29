@@ -6,12 +6,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tn.telecom.mgmtbackend.model.Organization;
 import tn.telecom.mgmtbackend.model.Role;
 import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RestController
 @RequestMapping("/api")
@@ -25,9 +29,22 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable(name = "id") Long id) {
+        return userService.getUserById(id);
+    }
+
     @PostMapping("/users")
     public User saveUser(@RequestBody User user){
         return userService.saveUser(user);
+    }
+
+    @GetMapping("/user/profile")
+    public User getUserByToken(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        System.out.println(authorizationHeader);
+        return userService.getUserByToken(authorizationHeader);
     }
 
     @PostMapping("/roles/addtouser")
