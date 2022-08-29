@@ -28,5 +28,5 @@ public class BusinessSector {
 
     @OneToMany(mappedBy = "sector", cascade = CascadeType.ALL)
     @JsonIgnore
-    public List<Organization> organizations;
+    private List<Organization> organizations;
 }

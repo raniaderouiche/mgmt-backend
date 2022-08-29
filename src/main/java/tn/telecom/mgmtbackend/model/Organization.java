@@ -1,5 +1,6 @@
 package tn.telecom.mgmtbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -68,8 +70,13 @@ public class Organization {
     @JoinColumn(name="image_id", referencedColumnName = "id")
     private CustomFile image;
 
-    @OneToOne(mappedBy = "organization")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="admin_id", referencedColumnName = "id")
     private User admin_org;
+
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<User> employees;
 
     public Organization(Long id, String name, String code, BusinessSector sector, String email,
                         String country, String region, String address, String phone,

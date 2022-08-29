@@ -28,5 +28,5 @@ public class Profession {
 
     @OneToMany(mappedBy = "profession", cascade = CascadeType.ALL)
     @JsonIgnore
-    public List<Type> types;
+    private List<Type> types;
 }

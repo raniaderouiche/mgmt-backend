@@ -66,6 +66,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         //it doesnt add the user to organization on database!!
         User user = userRepository.getById(adminId);
+        System.out.println(user);
         organization.setAdmin_org(user);
 
         if (image != null) {
