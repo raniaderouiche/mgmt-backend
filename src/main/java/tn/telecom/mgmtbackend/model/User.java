@@ -22,6 +22,7 @@ public class User {
     private Long id;
 
     // account information
+    @Column(unique = true)
     private String username;
     private String password;
     private Boolean isActive;
