@@ -7,12 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import tn.telecom.mgmtbackend.model.BusinessSector;
-import tn.telecom.mgmtbackend.model.Role;
-import tn.telecom.mgmtbackend.model.User;
-import tn.telecom.mgmtbackend.services.BusinessSectorService;
-import tn.telecom.mgmtbackend.services.RoleService;
-import tn.telecom.mgmtbackend.services.UserService;
+import tn.telecom.mgmtbackend.model.*;
+import tn.telecom.mgmtbackend.services.*;
 
 import java.util.ArrayList;
 
@@ -28,7 +24,7 @@ public class MgmtBackendApplication {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    CommandLineRunner run(UserService userService, RoleService roleService, BusinessSectorService sectorService){
+    CommandLineRunner run(UserService userService, RoleService roleService, BusinessSectorService sectorService, ProfessionService professionService, TypeService typeService){
         return args -> {
             roleService.saveRole(new Role(null,"SUPER_ADMIN"));
             roleService.saveRole(new Role(null,"ADMIN"));
@@ -39,9 +35,17 @@ public class MgmtBackendApplication {
             user.setEmail("rania.derouiche@gmail.com");
             userService.saveUser(user);
             userService.addRoleToUser("admin","SUPER_ADMIN");
+
+            // data for testing
             BusinessSector sector = new BusinessSector();
             sector.setName("TEST");
             sectorService.saveBusinessSector(sector);
+            Type type = new Type();
+            type.setName("TEST");
+            typeService.saveType(type);
+            Profession profession = new Profession();
+            profession.setName("TEST");
+            professionService.saveProfession(profession);
         };
     }
 

@@ -2,7 +2,6 @@ package tn.telecom.mgmtbackend.services;
 
 import org.springframework.web.multipart.MultipartFile;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
-import tn.telecom.mgmtbackend.model.BusinessSector;
 import tn.telecom.mgmtbackend.model.Organization;
 
 import java.util.List;

@@ -1,31 +1,33 @@
 package tn.telecom.mgmtbackend.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
-public class Type {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String  name;
+    @NotNull
+    @Column(unique = true)
+    private String name;
+
+    private String code;
+
+    private String item_class;
 
     @ManyToOne
-    @JoinColumn(name="profession_id")
-    private Profession profession;
-
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Item> items;
+    @JoinColumn(name="type_id")
+    private Type type;
 }
