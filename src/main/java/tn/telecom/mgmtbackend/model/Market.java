@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @ToString
-public class Item {
+public class Market {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,14 +26,25 @@ public class Item {
     private String name;
 
     private String code;
-    private String item_class;
+    private String budget;
+    @Column(name="market_type")
+    private String type;
+    @Column(name="market_unit")
     private String unit;
+    @Column(name="market_amount")
+    private Double amount;
+    @Column(name="market_limit")
+    private Double limit;
 
     @ManyToOne
-    @JoinColumn(name="type_id")
-    private Type type;
+    @JoinColumn(name="profession_id")
+    private Profession profession;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="organization_id")
+    private Organization organization;
+
+    @OneToMany(mappedBy = "market", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<ItemUsed> itemsUsed;
+    private List<PurchaseOrder> purchaseOrders;
 }

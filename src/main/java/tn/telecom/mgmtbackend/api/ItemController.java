@@ -26,7 +26,7 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteType(@PathVariable(name = "id") Long id) throws NotFoundException {
+    public void deleteItem(@PathVariable(name = "id") Long id) throws NotFoundException {
         itemService.deleteItem(id);
     }
 }

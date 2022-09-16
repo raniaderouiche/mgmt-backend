@@ -78,6 +78,10 @@ public class Organization {
     @JsonIgnore
     private List<User> employees;
 
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Market> markets;
+
     public Organization(Long id, String name, String code, BusinessSector sector, String email,
                         String country, String region, String address, String phone,
                         String directorFirstName, String directorLastName, String directorPhone,

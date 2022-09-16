@@ -45,6 +45,7 @@ public class MgmtBackendApplication {
             typeService.saveType(type);
             Profession profession = new Profession();
             profession.setName("TEST");
+            profession.setSector(sector);
             professionService.saveProfession(profession);
         };
     }

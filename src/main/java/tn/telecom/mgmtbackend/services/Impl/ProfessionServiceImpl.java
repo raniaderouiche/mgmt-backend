@@ -35,4 +35,9 @@ public class ProfessionServiceImpl implements ProfessionService {
             throw new NotFoundException();
         }
     }
+
+    @Override
+    public List<Profession> getProfessionBySectorId(Long id) {
+        return professionRepository.findProfessionBySectorId(id);
+    }
 }

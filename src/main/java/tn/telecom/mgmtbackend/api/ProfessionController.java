@@ -30,4 +30,9 @@ public class ProfessionController {
     public void deleteProfession(@PathVariable(name = "id") Long id) throws NotFoundException {
         professionService.deleteProfession(id);
     }
+
+    @GetMapping("/bySector/{id}")
+    public List<Profession> getProfessionBySectorId(@PathVariable(name = "id") Long id){
+        return professionService.getProfessionBySectorId(id);
+    }
 }

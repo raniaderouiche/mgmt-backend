@@ -9,4 +9,6 @@ public interface ProfessionService {
     List<Profession> getProfessions();
     void saveProfession(Profession profession);
     void deleteProfession(Long id) throws NotFoundException;
+
+    List<Profession> getProfessionBySectorId(Long id);
 }
