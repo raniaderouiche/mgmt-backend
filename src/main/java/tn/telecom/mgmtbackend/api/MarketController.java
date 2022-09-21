@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Market;
+import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.services.MarketService;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public class MarketController {
     @GetMapping("/")
     public List<Market> getMarkets(){
         return marketService.getMarkets();
+    }
+
+    @GetMapping("/{id}")
+    public Market getMarketById(@PathVariable(name = "id") Long id) {
+        return marketService.getMarketById(id);
     }
 
     @PostMapping("/")

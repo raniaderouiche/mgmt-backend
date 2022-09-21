@@ -45,6 +45,5 @@ public class Market {
     private Organization organization;
 
     @OneToMany(mappedBy = "market", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<PurchaseOrder> purchaseOrders;
 }

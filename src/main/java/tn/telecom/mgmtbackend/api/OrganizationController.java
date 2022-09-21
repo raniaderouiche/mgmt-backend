@@ -59,6 +59,7 @@ public class OrganizationController {
                                  @Nullable @RequestParam("directorLastName") String directorLastName,
                                  @Nullable @RequestParam("directorPhone")String directorPhone,
                                  @Nullable @RequestParam("directorEmail") String directorEmail)throws Exception{
+        System.out.println(name+ code+ sectorId+ email+ country+ region+ address+ phone+directorFirstName+ directorLastName+ directorPhone+directorEmail+adminId+document+image);
         organizationService.saveOrganization(name, code, sectorId, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,adminId, document, image);
 
     }

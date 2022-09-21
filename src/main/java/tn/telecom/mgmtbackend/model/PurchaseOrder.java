@@ -30,7 +30,9 @@ public class PurchaseOrder {
 
     @ManyToOne
     @JoinColumn(name="market_id")
+    @JsonIgnore
     private Market market;
+
 
     @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL)
     @JsonIgnore

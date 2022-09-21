@@ -78,6 +78,7 @@ public class Organization {
     @JsonIgnore
     private List<User> employees;
 
+
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Market> markets;
