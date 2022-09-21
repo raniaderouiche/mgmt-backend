@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Market;
-import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.repositories.MarketRepository;
 import tn.telecom.mgmtbackend.services.MarketService;
 

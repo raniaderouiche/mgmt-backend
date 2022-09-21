@@ -34,4 +34,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             throw new NotFoundException();
         }
     }
+
+    @Override
+    public PurchaseOrder getPurchaseOrderByID(Long id) {
+        return purchaseOrderRepository.getById(id);
+    }
 }

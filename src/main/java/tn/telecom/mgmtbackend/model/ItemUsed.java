@@ -1,5 +1,6 @@
 package tn.telecom.mgmtbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,11 @@ public class ItemUsed {
     private Long id;
 
     private Integer quantity;
-    private Integer price;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name="purchaseOrder_id")
+    @JsonIgnore
     private PurchaseOrder purchaseOrder;
 
     @ManyToOne

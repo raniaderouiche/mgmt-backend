@@ -26,7 +26,7 @@ public class MgmtBackendApplication {
     @Bean
     CommandLineRunner run(UserService userService, RoleService roleService, BusinessSectorService sectorService, ProfessionService professionService, TypeService typeService){
         return args -> {
-            roleService.saveRole(new Role(null,"SUPER_ADMIN"));
+            /*roleService.saveRole(new Role(null,"SUPER_ADMIN"));
             roleService.saveRole(new Role(null,"ADMIN"));
             roleService.saveRole(new Role(null,"USER"));
             User user = new User();
@@ -46,7 +46,7 @@ public class MgmtBackendApplication {
             Profession profession = new Profession();
             profession.setName("TEST");
             profession.setSector(sector);
-            professionService.saveProfession(profession);
+            professionService.saveProfession(profession);*/
         };
     }
 

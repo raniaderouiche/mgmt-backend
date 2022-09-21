@@ -1,9 +1,12 @@
 package tn.telecom.mgmtbackend.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
+import tn.telecom.mgmtbackend.model.Market;
 import tn.telecom.mgmtbackend.model.PurchaseOrder;
+import tn.telecom.mgmtbackend.services.MarketService;
 import tn.telecom.mgmtbackend.services.PurchaseOrderService;
 
 import java.util.List;
@@ -14,13 +17,18 @@ public class PurchaseOrderController {
     @Autowired
     private PurchaseOrderService purchaseOrderService;
 
+    @Autowired
+    private MarketService marketService;
+
     @GetMapping("/")
     public List<PurchaseOrder> getPurchaseOrders(){
         return purchaseOrderService.getPurchaseOrders();
     }
 
     @PostMapping("/")
-    public void savePurchaseOrder(@RequestBody PurchaseOrder order){
+    public void savePurchaseOrder(@Nullable @RequestParam("marketID") Long marketID, @RequestBody PurchaseOrder order){
+        Market market = marketService.getMarketById(marketID);
+        order.setMarket(market);
         purchaseOrderService.savePurchaseOrder(order);
     }
 
