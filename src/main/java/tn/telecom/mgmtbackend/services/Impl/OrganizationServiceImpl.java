@@ -15,6 +15,7 @@ import tn.telecom.mgmtbackend.repositories.CustomFileRepository;
 import tn.telecom.mgmtbackend.repositories.OrganizationRepository;
 import tn.telecom.mgmtbackend.repositories.UserRepository;
 import tn.telecom.mgmtbackend.services.OrganizationService;
+import tn.telecom.mgmtbackend.services.UserService;
 
 import java.util.Base64;
 import java.util.List;
@@ -29,6 +30,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     private CustomFileRepository customFileRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserServiceImpl userService;
+
     @Autowired
     private BusinessSectorRepository businessSectorRepository;
 
@@ -43,6 +48,18 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Organization getOrganizationById(Long id) {
         if(this.organizationRepository.findById(id).isPresent()) {
             return this.organizationRepository.findById(id).get();
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public Organization getOrganizationByAdminId(Long id) {
+        User admin = userService.getUserById(id);
+        if(admin == null) return null;
+
+        if(this.organizationRepository.existsByAdminOrg(admin)){
+            return this.organizationRepository.findByAdminOrg(admin);
         }else{
             return null;
         }
@@ -67,7 +84,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         //it doesnt add the user to organization on database!!
         User user = userRepository.getById(adminId);
         System.out.println(user);
-        organization.setAdmin_org(user);
+        organization.setAdminOrg(user);
 
         if (image != null) {
             String imageName = StringUtils.cleanPath(image.getOriginalFilename());
@@ -178,7 +195,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             //user.setIsActive(true);
             organizationRepository.save(existing_org);
             System.out.println("beforeeeeeeeeee email (saved)");
-            this.emailService.sendEmail(existing_org.getAdmin_org().getId());
+            this.emailService.sendEmail(existing_org.getAdminOrg().getId());
             System.out.println("afteeeeeeeeeeeeeeeeeeeeeeeeer email (saved)");
             //userRepository.save(user);
 

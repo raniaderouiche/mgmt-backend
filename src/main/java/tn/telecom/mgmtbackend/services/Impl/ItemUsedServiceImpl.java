@@ -23,7 +23,7 @@ public class ItemUsedServiceImpl implements ItemUsedService {
 
     @Override
     public void saveItemUsed(ItemUsed itemUsed) {
-
+        this.itemUsedRepository.save(itemUsed);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class Organization {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="admin_id", referencedColumnName = "id")
-    private User admin_org;
+    private User adminOrg;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
     @JsonIgnore

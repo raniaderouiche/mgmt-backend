@@ -7,27 +7,36 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
-public class ItemUsed {
+public class WorkOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long quantity;
-    private Long price;
+    private String code;
+
+    private Date orderDate;
+
+    private Date startDate;
+
+    @Column(name="workOrder_limit")
+    private Long limit;
+
+    @Column(name="workOrder_amount")
+    private Long amount;
 
     @ManyToOne
-    @JoinColumn(name="purchaseOrder_id")
+    @JoinColumn(name = "purchaseOrder_id")
     @JsonIgnore
     private PurchaseOrder purchaseOrder;
 
-    @ManyToOne
-    @JoinColumn(name="item_id")
-    private Item item;
+
+
 }

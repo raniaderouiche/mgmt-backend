@@ -25,7 +25,6 @@ public class UserUtils {
     }
 
     public static User getUserFromToken(String authorizationHeader){
-        System.out.println("za3ma");
         System.out.println(authorizationHeader);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
             String token = authorizationHeader.substring("Bearer ".length());

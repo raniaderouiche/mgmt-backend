@@ -42,6 +42,11 @@ public class OrganizationController {
         return organizationService.getOrganizationById(id);
     }
 
+    @GetMapping("/admin/{id}")
+    public Organization getOrganizationByAdminId(@PathVariable(name = "id") Long id) {
+        return organizationService.getOrganizationByAdminId(id);
+    }
+
 
     @PostMapping("/")
     public void saveOrganization(@Nullable @RequestParam(name = "document") MultipartFile document,

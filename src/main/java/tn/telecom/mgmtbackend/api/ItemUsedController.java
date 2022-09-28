@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import tn.telecom.mgmtbackend.model.ItemUsed;
+import tn.telecom.mgmtbackend.model.Market;
 import tn.telecom.mgmtbackend.model.PurchaseOrder;
 import tn.telecom.mgmtbackend.services.ItemUsedService;
 import tn.telecom.mgmtbackend.services.PurchaseOrderService;
@@ -20,13 +21,15 @@ public class ItemUsedController {
     @Autowired
     private PurchaseOrderService purchaseOrderService;
 
-    @GetMapping("/")
-    public List<ItemUsed> getItemUsedByPurchaseOrder(@Nullable @RequestParam("orderID") Long orderID){
+    @GetMapping("/{id}")
+    public List<ItemUsed> getItemsUsedByPurchaseOrder(@PathVariable(name = "id") Long orderID){
         return itemUsedService.getItemsUsedByPurchaseOrder(orderID);
     }
 
-    @PostMapping("/")
-    public void saveItemUsed(@Nullable @RequestParam("orderID") Long orderID, @RequestBody ItemUsed itemUsed){
+    @PostMapping("/{id}")
+    public void saveItemUsed(@PathVariable(name = "id") Long orderID, @RequestBody ItemUsed itemUsed){
+        System.out.println(orderID);
+        System.out.println(itemUsed);
         PurchaseOrder order = purchaseOrderService.getPurchaseOrderByID(orderID);
         itemUsed.setPurchaseOrder(order);
         itemUsedService.saveItemUsed(itemUsed);

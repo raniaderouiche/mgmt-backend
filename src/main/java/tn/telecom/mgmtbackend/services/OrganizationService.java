@@ -10,6 +10,7 @@ public interface OrganizationService {
 
     List<Organization> getOrganizations();
     Organization getOrganizationById(Long id);
+    Organization getOrganizationByAdminId(Long id);
     void saveOrganization(String name, String code, Long sectorId,
                           String email, String country, String region, String address,
                           String phone, String directorFirstName, String directorLastName,
