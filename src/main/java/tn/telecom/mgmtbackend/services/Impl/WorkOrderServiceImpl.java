@@ -8,6 +8,7 @@ import tn.telecom.mgmtbackend.model.WorkOrder;
 import tn.telecom.mgmtbackend.repositories.WorkOrderRepository;
 import tn.telecom.mgmtbackend.services.WorkOrderService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +35,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 
     @Override
     public void saveWorkOrder(WorkOrder workOrder) {
+        workOrder.setOrderDate(new Date());
         this.workOrderRepository.save(workOrder);
     }
 

@@ -1,5 +1,6 @@
 package tn.telecom.mgmtbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Attachment {
 
     private String code;
 
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date attachmentDate;
 
     @OneToMany(mappedBy = "attachment", cascade = CascadeType.ALL)

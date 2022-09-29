@@ -3,9 +3,7 @@ package tn.telecom.mgmtbackend.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
-import tn.telecom.mgmtbackend.model.Attachment;
 import tn.telecom.mgmtbackend.model.WorkOrder;
-import tn.telecom.mgmtbackend.services.AttachmentService;
 import tn.telecom.mgmtbackend.services.WorkOrderService;
 
 import java.util.List;
