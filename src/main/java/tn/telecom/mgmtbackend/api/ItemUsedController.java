@@ -3,6 +3,7 @@ package tn.telecom.mgmtbackend.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.ItemUsed;
 import tn.telecom.mgmtbackend.model.Market;
 import tn.telecom.mgmtbackend.model.PurchaseOrder;
@@ -28,10 +29,13 @@ public class ItemUsedController {
 
     @PostMapping("/{id}")
     public void saveItemUsed(@PathVariable(name = "id") Long orderID, @RequestBody ItemUsed itemUsed){
-        System.out.println(orderID);
-        System.out.println(itemUsed);
         PurchaseOrder order = purchaseOrderService.getPurchaseOrderByID(orderID);
         itemUsed.setPurchaseOrder(order);
         itemUsedService.saveItemUsed(itemUsed);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteItemUsed(@PathVariable(name = "id") Long id) throws NotFoundException {
+        itemUsedService.deleteItemUsed(id);
     }
 }

@@ -1,7 +1,6 @@
 package tn.telecom.mgmtbackend.services;
 
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
-import tn.telecom.mgmtbackend.model.Profession;
 import tn.telecom.mgmtbackend.model.Role;
 
 import java.util.List;

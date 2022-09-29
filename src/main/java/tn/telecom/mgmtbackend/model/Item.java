@@ -36,4 +36,12 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ItemUsed> itemsUsed;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<DefinitiveOrder> definitiveOrders;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ItemRealised> itemsRealised;
 }

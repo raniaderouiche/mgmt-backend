@@ -15,8 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @ToString
-//Ordre de Traveaux
-public class WorkOrder {
+public class Attachment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,24 +23,10 @@ public class WorkOrder {
 
     private String code;
 
-    private Date orderDate;
+    private Date attachmentDate;
 
-    private Date startDate;
-
-    @Column(name="workOrder_limit")
-    private Long limit;
-
-    @Column(name="workOrder_amount")
-    private Long amount;
-
-    @ManyToOne
-    @JoinColumn(name = "purchaseOrder_id")
+    @OneToMany(mappedBy = "attachment", cascade = CascadeType.ALL)
     @JsonIgnore
-    private PurchaseOrder purchaseOrder;
-
-
-    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<DefinitiveOrder> definitiveOrders;
+    private List<ItemRealised> itemsRealised;
 
 }

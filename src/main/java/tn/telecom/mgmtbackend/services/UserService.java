@@ -1,6 +1,5 @@
 package tn.telecom.mgmtbackend.services;
 
-import tn.telecom.mgmtbackend.model.Role;
 import tn.telecom.mgmtbackend.model.User;
 
 import java.util.List;
