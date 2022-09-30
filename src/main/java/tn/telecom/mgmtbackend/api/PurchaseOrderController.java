@@ -36,4 +36,9 @@ public class PurchaseOrderController {
     public void deletePurchaseOrder(@PathVariable(name = "id") Long id) throws NotFoundException {
         purchaseOrderService.deletePurchaseOrder(id);
     }
+
+    @GetMapping("/{id}")
+    public PurchaseOrder getPurchaseOrderByID(@PathVariable(name = "id") Long id){
+        return purchaseOrderService.getPurchaseOrderByID(id);
+    }
 }

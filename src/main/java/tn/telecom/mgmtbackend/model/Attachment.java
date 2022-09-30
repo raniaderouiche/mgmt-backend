@@ -27,6 +27,14 @@ public class Attachment {
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date attachmentDate;
 
+    @ManyToOne
+    @JoinColumn(name="purchaseOrder_id")
+    private PurchaseOrder purchaseOrder;
+
+    @ManyToOne
+    @JoinColumn(name="workOrder_id")
+    private WorkOrder workOrder;
+
     @OneToMany(mappedBy = "attachment", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ItemRealised> itemsRealised;

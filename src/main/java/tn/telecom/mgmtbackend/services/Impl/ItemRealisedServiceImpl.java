@@ -4,8 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
+import tn.telecom.mgmtbackend.model.Attachment;
+import tn.telecom.mgmtbackend.model.Item;
 import tn.telecom.mgmtbackend.model.ItemRealised;
+import tn.telecom.mgmtbackend.repositories.AttachmentRepository;
 import tn.telecom.mgmtbackend.repositories.ItemRealisedRepository;
+import tn.telecom.mgmtbackend.repositories.ItemRepository;
 import tn.telecom.mgmtbackend.services.ItemRealisedService;
 
 import java.util.List;
@@ -16,6 +20,12 @@ public class ItemRealisedServiceImpl implements ItemRealisedService {
 
     @Autowired
     private ItemRealisedRepository itemRealisedRepository;
+
+    @Autowired
+    private AttachmentRepository attachmentRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Override
     public List<ItemRealised> getItemsRealised() {
@@ -32,7 +42,11 @@ public class ItemRealisedServiceImpl implements ItemRealisedService {
     }
 
     @Override
-    public void saveItemRealised(ItemRealised itemRealised) {
+    public void saveItemRealised(Long itemId, Long attachmentId, ItemRealised itemRealised) {
+        Attachment attachment = attachmentRepository.getById(attachmentId);
+        Item item = itemRepository.getById(itemId);
+        itemRealised.setAttachment(attachment);
+        itemRealised.setItem(item);
         this.itemRealisedRepository.save(itemRealised);
     }
 

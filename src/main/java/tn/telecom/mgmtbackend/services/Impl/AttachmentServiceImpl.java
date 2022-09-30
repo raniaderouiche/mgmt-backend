@@ -44,4 +44,9 @@ public class AttachmentServiceImpl implements AttachmentService {
             throw new NotFoundException();
         }
     }
+
+    @Override
+    public List<Attachment> getAttachmentsByOrderId(Long id){
+        return this.attachmentRepository.findAttachmentsByPurchaseOrderId(id);
+    }
 }

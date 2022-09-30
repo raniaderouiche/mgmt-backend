@@ -9,6 +9,6 @@ import java.util.List;
 public interface ItemRealisedService {
     List<ItemRealised> getItemsRealised();
     ItemRealised getItemRealisedById(Long id) throws NotFoundException;
-    void saveItemRealised(ItemRealised itemRealised);
+    void saveItemRealised(Long itemId, Long attachmentId, ItemRealised itemRealised);
     void deleteItemRealised(Long id) throws NotFoundException;
 }

@@ -9,6 +9,7 @@ import tn.telecom.mgmtbackend.repositories.PurchaseOrderRepository;
 import tn.telecom.mgmtbackend.services.PurchaseOrderService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +38,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public PurchaseOrder getPurchaseOrderByID(Long id) {
-        return purchaseOrderRepository.getById(id);
+        if(this.purchaseOrderRepository.findById(id).isPresent()) {
+            return this.purchaseOrderRepository.findById(id).get();
+        }else{
+            return null;
+        }
     }
 }

@@ -47,4 +47,8 @@ public class WorkOrder {
     @JsonIgnore
     private List<DefinitiveOrder> definitiveOrders;
 
+    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Attachment> attachments;
+
 }

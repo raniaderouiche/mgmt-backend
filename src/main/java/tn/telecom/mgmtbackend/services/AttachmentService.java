@@ -11,4 +11,6 @@ public interface AttachmentService {
     Attachment getAttachmentById(Long id) throws NotFoundException;
     void saveAttachment(Attachment attachment);
     void deleteAttachment(Long id) throws NotFoundException;
+
+    List<Attachment> getAttachmentsByOrderId(Long id);
 }

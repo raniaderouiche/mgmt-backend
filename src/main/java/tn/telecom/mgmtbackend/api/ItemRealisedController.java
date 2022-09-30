@@ -28,8 +28,10 @@ public class ItemRealisedController {
     }
 
     @PostMapping("/")
-    public void saveItemRealised(@RequestBody ItemRealised itemRealised){
-        itemRealisedService.saveItemRealised(itemRealised);
+    public void saveItemRealised(@RequestParam("itemId") Long itemId,
+                                 @RequestParam("attachmentId")Long attachmentId,
+                                 @RequestBody ItemRealised itemRealised){
+        itemRealisedService.saveItemRealised(itemId,attachmentId,itemRealised);
     }
 
     @DeleteMapping("/{id}")

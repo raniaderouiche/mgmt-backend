@@ -39,4 +39,8 @@ public class PurchaseOrder {
 
     @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL)
     private List<WorkOrder> workOrders;
+
+    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Attachment> attachments;
 }

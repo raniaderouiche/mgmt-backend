@@ -33,4 +33,9 @@ public class AttachmentController {
     public void deleteAttachment(@PathVariable(name = "id") Long id) throws NotFoundException {
         attachmentService.deleteAttachment(id);
     }
+
+    @GetMapping("/order/{id}")
+    public List<Attachment> getAttachmentByOrderId(@PathVariable(name = "id") Long id){
+        return attachmentService.getAttachmentsByOrderId(id);
+    }
 }
