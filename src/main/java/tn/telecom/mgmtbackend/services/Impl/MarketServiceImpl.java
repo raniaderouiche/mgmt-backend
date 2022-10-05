@@ -23,6 +23,11 @@ public class MarketServiceImpl implements MarketService {
     }
 
     @Override
+    public List<Market> getMarketsByType(String type) {
+        return this.marketRepository.findAllByType(type);
+    }
+
+    @Override
     public void saveMarket(Market market) {
         marketRepository.save(market);
     }

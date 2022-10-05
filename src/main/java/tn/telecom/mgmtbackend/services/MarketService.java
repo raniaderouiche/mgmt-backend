@@ -9,6 +9,7 @@ import java.util.List;
 public interface MarketService {
 
     List<Market> getMarkets();
+    List<Market> getMarketsByType( String type);
     void saveMarket(Market market);
     void deleteMarket(Long id) throws NotFoundException;
     Market getMarketById(Long id);

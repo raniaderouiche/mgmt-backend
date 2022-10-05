@@ -9,6 +9,8 @@ import java.util.List;
 public interface WorkOrderService {
     List<WorkOrder> getWorkOrders();
     WorkOrder getWorkOrderById(Long id) throws NotFoundException;
-    void saveWorkOrder(WorkOrder workOrder);
+    void saveWorkOrder(WorkOrder workOrder, Long purchaseOrderId);
     void deleteWorkOrder(Long id) throws NotFoundException;
+    List<WorkOrder> getWorkOrdersByOrderId(Long id);
+
 }

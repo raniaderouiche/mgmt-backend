@@ -25,6 +25,11 @@ public class MarketController {
         return marketService.getMarketById(id);
     }
 
+    @GetMapping("/type/{type}")
+    public List<Market> getMarketsByType(@PathVariable(name = "type") String type) {
+        return marketService.getMarketsByType(type);
+    }
+
     @PostMapping("/")
     public void saveMarket(@RequestBody Market market){
         marketService.saveMarket(market);
