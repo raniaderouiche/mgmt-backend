@@ -10,7 +10,7 @@ public interface MarketService {
 
     List<Market> getMarkets();
     List<Market> getMarketsByType( String type);
-    void saveMarket(Market market);
+    void saveMarket(Market market,String header);
     void deleteMarket(Long id) throws NotFoundException;
     Market getMarketById(Long id);
 }

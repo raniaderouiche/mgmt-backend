@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 public class Profession {
 
     @Id
@@ -33,4 +32,12 @@ public class Profession {
     @OneToMany(mappedBy = "profession", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Market> markets;
+
+    @Override
+    public String toString() {
+        return "Profession{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

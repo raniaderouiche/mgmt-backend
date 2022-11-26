@@ -26,12 +26,17 @@ public class DefinitiveOrderController {
     }
 
     @PostMapping("/")
-    public void saveDefinitiveOrder(@RequestBody DefinitiveOrder definitiveOrder){
-        definitiveOrderService.saveDefinitiveOrder(definitiveOrder);
+    public void saveDefinitiveOrder(@RequestBody DefinitiveOrder definitiveOrder,@RequestParam("workOrderID") Long workOrderID){
+        definitiveOrderService.saveDefinitiveOrder(definitiveOrder,workOrderID);
     }
 
     @DeleteMapping("/{id}")
     public void deleteDefinitiveOrder(@PathVariable(name = "id") Long id) throws NotFoundException {
         definitiveOrderService.deleteDefinitiveOrder(id);
+    }
+
+    @GetMapping("/filter")
+    public List<DefinitiveOrder> getDefinitiveOrdersByWorkOrderId(@RequestParam(name = "workorderID") Long id){
+        return definitiveOrderService.getDefinitiveOrdersById(id);
     }
 }

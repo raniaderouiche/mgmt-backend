@@ -8,6 +8,8 @@ import java.util.List;
 public interface DefinitiveOrderService {
     List<DefinitiveOrder> getDefinitiveOrders();
     DefinitiveOrder getDefinitiveOrderById(Long id) throws NotFoundException;
-    void saveDefinitiveOrder(DefinitiveOrder definitiveOrder);
+    void saveDefinitiveOrder(DefinitiveOrder definitiveOrder,Long workOrderID);
     void deleteDefinitiveOrder(Long id) throws NotFoundException;
+
+    List<DefinitiveOrder> getDefinitiveOrdersById(Long id);
 }

@@ -43,8 +43,7 @@ public class WorkOrder {
     private PurchaseOrder purchaseOrder;
 
 
-    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DefinitiveOrder> definitiveOrders;
 
     @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL)

@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.DefinitiveOrder;
+import tn.telecom.mgmtbackend.model.WorkOrder;
 import tn.telecom.mgmtbackend.repositories.DefinitiveOrderRepository;
+import tn.telecom.mgmtbackend.repositories.WorkOrderRepository;
 import tn.telecom.mgmtbackend.services.DefinitiveOrderService;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
 
     @Autowired
     private DefinitiveOrderRepository definitiveOrderRepository;
+
+    @Autowired
+    private WorkOrderRepository workOrderRepository;
 
     @Override
     public List<DefinitiveOrder> getDefinitiveOrders() {
@@ -33,7 +38,10 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
     }
 
     @Override
-    public void saveDefinitiveOrder(DefinitiveOrder definitiveOrder) {
+    public void saveDefinitiveOrder(DefinitiveOrder definitiveOrder,Long workOrderID) {
+        WorkOrder workOrder = this.workOrderRepository.getById(workOrderID);
+        System.out.println("WORKID" + workOrder.getId());
+        definitiveOrder.setWorkOrder(workOrder);
         this.definitiveOrderRepository.save(definitiveOrder);
     }
 
@@ -44,5 +52,10 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
         }else {
             throw new NotFoundException();
         }
+    }
+
+    @Override
+    public List<DefinitiveOrder> getDefinitiveOrdersById(Long id) {
+        return definitiveOrderRepository.findDefinitiveOrdersByWorkOrderId(id);
     }
 }

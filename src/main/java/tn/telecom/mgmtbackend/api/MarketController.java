@@ -4,9 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Market;
+import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.services.MarketService;
+import tn.telecom.mgmtbackend.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RestController
 @RequestMapping("/market")
@@ -31,8 +36,9 @@ public class MarketController {
     }
 
     @PostMapping("/")
-    public void saveMarket(@RequestBody Market market){
-        marketService.saveMarket(market);
+    public void saveMarket(@RequestBody Market market, HttpServletRequest request){
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        marketService.saveMarket(market,authorizationHeader);
     }
 
     @DeleteMapping("/{id}")

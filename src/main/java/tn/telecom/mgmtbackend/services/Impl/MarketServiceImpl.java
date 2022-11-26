@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Market;
+import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.repositories.MarketRepository;
 import tn.telecom.mgmtbackend.services.MarketService;
+import tn.telecom.mgmtbackend.services.UserService;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class MarketServiceImpl implements MarketService {
 
     @Autowired
     private MarketRepository marketRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<Market> getMarkets() {
@@ -28,7 +33,9 @@ public class MarketServiceImpl implements MarketService {
     }
 
     @Override
-    public void saveMarket(Market market) {
+    public void saveMarket(Market market,String header) {
+        User user = userService.getUserByToken(header);
+        market.setOrganization(user.getOrganization());
         marketRepository.save(market);
     }
 

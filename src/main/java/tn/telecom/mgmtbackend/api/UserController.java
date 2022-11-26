@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/user/profile")
     public User getUserByToken(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        System.out.println(authorizationHeader);
+        System.out.println("get user by token = " + authorizationHeader);
         return userService.getUserByToken(authorizationHeader);
     }
 

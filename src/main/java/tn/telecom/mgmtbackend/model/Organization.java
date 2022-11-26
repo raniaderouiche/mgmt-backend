@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 public class Organization {
 
     @Id
@@ -120,4 +119,25 @@ public class Organization {
         this.directorEmail = directorEmail;
     }
 
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                ", directorFirstName='" + directorFirstName + '\'' +
+                ", directorLastName='" + directorLastName + '\'' +
+                ", directorPhone='" + directorPhone + '\'' +
+                ", directorEmail='" + directorEmail + '\'' +
+                ", document=" + document +
+                ", image=" + image +
+                ", markets=" + markets +
+                '}';
+    }
 }
