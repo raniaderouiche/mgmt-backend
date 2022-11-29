@@ -50,4 +50,8 @@ public class WorkOrder {
     @JsonIgnore
     private List<Attachment> attachments;
 
+    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Delivery> deliveries;
+
 }

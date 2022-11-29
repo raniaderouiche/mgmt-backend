@@ -28,14 +28,18 @@ public class ItemRealisedController {
     }
 
     @PostMapping("/")
-    public void saveItemRealised(@RequestParam("itemId") Long itemId,
-                                 @RequestParam("attachmentId")Long attachmentId,
+    public void saveItemRealised(@RequestParam("attachmentId")Long attachmentId,
                                  @RequestBody ItemRealised itemRealised){
-        itemRealisedService.saveItemRealised(itemId,attachmentId,itemRealised);
+        itemRealisedService.saveItemRealised(attachmentId,itemRealised);
     }
 
     @DeleteMapping("/{id}")
     public void deleteItemRealised(@PathVariable(name = "id") Long id) throws NotFoundException {
         itemRealisedService.deleteItemRealised(id);
+    }
+
+    @GetMapping("/attachment/{id}")
+    public List<ItemRealised> getItemsRealisedByAttachmentId(@PathVariable(name = "id") Long id){
+        return itemRealisedService.getItemsRealisedByAttachmentID(id);
     }
 }

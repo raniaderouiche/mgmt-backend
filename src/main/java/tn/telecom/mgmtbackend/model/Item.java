@@ -44,4 +44,8 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ItemRealised> itemsRealised;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ItemDelivered> itemsDelivered;
 }

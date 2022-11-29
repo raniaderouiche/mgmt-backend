@@ -42,11 +42,13 @@ public class ItemRealisedServiceImpl implements ItemRealisedService {
     }
 
     @Override
-    public void saveItemRealised(Long itemId, Long attachmentId, ItemRealised itemRealised) {
-        Attachment attachment = attachmentRepository.getById(attachmentId);
-        Item item = itemRepository.getById(itemId);
+    public void saveItemRealised(Long attachmentId, ItemRealised itemRealised) {
+        Attachment attachment = new Attachment();
+        if(attachmentRepository.findById(attachmentId).isPresent()){
+            attachment = attachmentRepository.findById(attachmentId).get();
+        }
+
         itemRealised.setAttachment(attachment);
-        itemRealised.setItem(item);
         this.itemRealisedRepository.save(itemRealised);
     }
 
@@ -57,5 +59,10 @@ public class ItemRealisedServiceImpl implements ItemRealisedService {
         }else {
             throw new NotFoundException();
         }
+    }
+
+    @Override
+    public List<ItemRealised> getItemsRealisedByAttachmentID(Long id) {
+        return itemRealisedRepository.findByAttachmentId(id);
     }
 }

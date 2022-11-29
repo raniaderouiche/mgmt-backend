@@ -45,4 +45,14 @@ public class MarketController {
     public void deleteMarket(@PathVariable(name = "id") Long id) throws NotFoundException {
         marketService.deleteMarket(id);
     }
+
+    @GetMapping("/purchase-order/{id}")
+    public Market getMarketByPurchaseOrderId(@PathVariable(name = "id") Long id) {
+        return marketService.getMarketByPurchaseOrderID(id);
+    }
+
+    @GetMapping("/work-order/{id}")
+    public Market getMarketByWorkOrderId(@PathVariable(name = "id") Long id) {
+        return marketService.getMarketByWorkOrderID(id);
+    }
 }

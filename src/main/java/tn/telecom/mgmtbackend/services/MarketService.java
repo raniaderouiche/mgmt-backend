@@ -13,4 +13,7 @@ public interface MarketService {
     void saveMarket(Market market,String header);
     void deleteMarket(Long id) throws NotFoundException;
     Market getMarketById(Long id);
+
+    Market getMarketByPurchaseOrderID(Long id);
+    Market getMarketByWorkOrderID(Long id);
 }
