@@ -13,4 +13,6 @@ public interface AttachmentService {
     void deleteAttachment(Long id) throws NotFoundException;
 
     List<Attachment> getAttachmentsByOrderId(Long id);
+
+    List<Attachment> getAttachmentsByWorkOrderId(Long id);
 }

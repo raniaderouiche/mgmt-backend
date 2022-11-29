@@ -36,7 +36,6 @@ public class Attachment {
     private WorkOrder workOrder;
 
     @OneToMany(mappedBy = "attachment", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<ItemRealised> itemsRealised;
 
 }

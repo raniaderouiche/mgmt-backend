@@ -41,4 +41,9 @@ public class PurchaseOrderController {
     public PurchaseOrder getPurchaseOrderByID(@PathVariable(name = "id") Long id){
         return purchaseOrderService.getPurchaseOrderByID(id);
     }
+
+    @GetMapping("/work-order/{id}")
+    public PurchaseOrder getPurchaseOrderByWorkOrderID(@PathVariable(name = "id") Long id){
+        return purchaseOrderService.getPurchaseOrderByWorkOrderID(id);
+    }
 }

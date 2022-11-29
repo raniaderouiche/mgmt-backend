@@ -38,4 +38,9 @@ public class AttachmentController {
     public List<Attachment> getAttachmentByOrderId(@PathVariable(name = "id") Long id){
         return attachmentService.getAttachmentsByOrderId(id);
     }
+
+    @GetMapping("/work-order/{id}")
+    public List<Attachment> getAttachmentByWorkOrderId(@PathVariable(name = "id") Long id){
+        return attachmentService.getAttachmentsByWorkOrderId(id);
+    }
 }

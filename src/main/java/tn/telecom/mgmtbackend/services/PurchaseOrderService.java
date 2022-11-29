@@ -12,4 +12,6 @@ public interface PurchaseOrderService {
     void deletePurchaseOrder(Long id) throws NotFoundException;
 
     PurchaseOrder getPurchaseOrderByID(Long id);
+
+    PurchaseOrder getPurchaseOrderByWorkOrderID(Long id);
 }

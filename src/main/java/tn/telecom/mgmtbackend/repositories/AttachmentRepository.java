@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
     List<Attachment> findAttachmentsByPurchaseOrderId(Long id);
+    List<Attachment> findAttachmentsByWorkOrderId(Long id);
 }

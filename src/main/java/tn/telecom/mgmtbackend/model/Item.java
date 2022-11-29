@@ -27,7 +27,7 @@ public class Item {
 
     private String code;
     private String item_class;
-    private String unit;
+    private String unit; // this should be removed
 
     @ManyToOne
     @JoinColumn(name="type_id")

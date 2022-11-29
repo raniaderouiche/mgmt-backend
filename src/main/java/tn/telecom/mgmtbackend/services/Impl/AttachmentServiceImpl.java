@@ -49,4 +49,9 @@ public class AttachmentServiceImpl implements AttachmentService {
     public List<Attachment> getAttachmentsByOrderId(Long id){
         return this.attachmentRepository.findAttachmentsByPurchaseOrderId(id);
     }
+
+    @Override
+    public List<Attachment> getAttachmentsByWorkOrderId(Long id) {
+        return this.attachmentRepository.findAttachmentsByWorkOrderId(id);
+    }
 }
