@@ -71,6 +71,7 @@ public class Organization {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="admin_id", referencedColumnName = "id")
+    @JsonIgnore
     private User adminOrg;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)

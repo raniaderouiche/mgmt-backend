@@ -9,4 +9,6 @@ public interface RoleService {
     List<Role> getRoles();
     Role saveRole(Role role);
     void deleteRole(Long id) throws NotFoundException;
+
+    Role getRoleByName(String name);
 }

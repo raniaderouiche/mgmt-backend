@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Organization;
+import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.services.OrganizationService;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -52,7 +54,6 @@ public class OrganizationController {
     public void saveOrganization(@Nullable @RequestParam(name = "document") MultipartFile document,
                                  @Nullable @RequestParam(name = "image") MultipartFile image,
                                  @Nullable @RequestParam("sectorId") Long sectorId,
-                                 @Nullable @RequestParam("adminId")Long adminId,
                                  @Nullable @RequestParam("name") String name,
                                  @Nullable @RequestParam("code") String code,
                                  @Nullable @RequestParam("email") String email,
@@ -63,9 +64,18 @@ public class OrganizationController {
                                  @Nullable @RequestParam("directorFirstName") String directorFirstName,
                                  @Nullable @RequestParam("directorLastName") String directorLastName,
                                  @Nullable @RequestParam("directorPhone")String directorPhone,
-                                 @Nullable @RequestParam("directorEmail") String directorEmail)throws Exception{
-        System.out.println(name+ code+ sectorId+ email+ country+ region+ address+ phone+directorFirstName+ directorLastName+ directorPhone+directorEmail+adminId+document+image);
-        organizationService.saveOrganization(name, code, sectorId, email, country, region, address, phone, directorFirstName, directorLastName, directorPhone, directorEmail,adminId, document, image);
+                                 @Nullable @RequestParam("directorEmail") String directorEmail,
+                                 @Nullable @RequestParam("adminUsername") String adminUsername,
+                                 @Nullable @RequestParam("adminPwd") String adminPwd,
+                                 @Nullable @RequestParam("adminFN") String adminFN,
+                                 @Nullable @RequestParam("adminLN") String adminLN,
+                                 @Nullable @RequestParam("adminGender") String adminGender,
+                                 @Nullable @RequestParam("adminDob") Date adminDob,
+                                 @Nullable @RequestParam("adminPhone") String adminPhone,
+                                 @Nullable @RequestParam("adminEmail") String adminEmail
+    )throws Exception{
+        System.out.println(name+ code+ sectorId+ email+ country+ region+ address+ phone+directorFirstName+ directorLastName+ directorPhone+directorEmail+document+image);
+        organizationService.saveOrganization(name, code, sectorId, email, country, region, address, phone, directorFirstName, directorLastName,directorPhone, directorEmail,adminUsername,adminPwd,adminFN,adminLN,adminDob, adminGender,adminPhone,adminEmail, document, image);
 
     }
 
@@ -105,6 +115,9 @@ public class OrganizationController {
         organizationService.rejectOrganization(id);
     }
 
-
+    @GetMapping("/get-admin/{id}")
+    public User getOrganizationAdmin(@PathVariable(name = "id") Long id){
+        return organizationService.getOrganizationAdmin(id);
+    }
 
 }

@@ -9,9 +9,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Organization;
 import tn.telecom.mgmtbackend.model.Role;
 import tn.telecom.mgmtbackend.model.User;
+import tn.telecom.mgmtbackend.repositories.OrganizationRepository;
 import tn.telecom.mgmtbackend.repositories.RoleRepository;
 import tn.telecom.mgmtbackend.repositories.UserRepository;
 import tn.telecom.mgmtbackend.services.UserService;
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -48,9 +53,9 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -84,4 +89,31 @@ public class UserServiceImpl implements UserService,UserDetailsService {
             return null;
         }
     }
+
+    @Override
+    public void deleteUserById(Long id) throws NotFoundException {
+        if (this.userRepository.findById(id).isPresent()) {
+            User user = this.userRepository.findById(id).get();
+            user.setOrganization(null);
+            this.userRepository.save(user);
+            this.userRepository.deleteById(id);
+        } else {
+            throw new NotFoundException();
+        }
+    }
+
+    @Override
+    public void saveUser(User user, Long orgId) throws NotFoundException {
+        if( this.organizationRepository.findById(orgId).isPresent()){
+            Organization organization = this.organizationRepository.findById(orgId).get();
+            user.setOrganization(organization);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+        }
+        else {
+            throw new NotFoundException();
+        }
+
+    }
+
 }

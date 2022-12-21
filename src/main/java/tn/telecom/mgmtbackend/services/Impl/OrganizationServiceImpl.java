@@ -2,22 +2,23 @@ package tn.telecom.mgmtbackend.services.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
-import tn.telecom.mgmtbackend.model.BusinessSector;
-import tn.telecom.mgmtbackend.model.CustomFile;
-import tn.telecom.mgmtbackend.model.Organization;
-import tn.telecom.mgmtbackend.model.User;
+import tn.telecom.mgmtbackend.model.*;
 import tn.telecom.mgmtbackend.repositories.BusinessSectorRepository;
 import tn.telecom.mgmtbackend.repositories.CustomFileRepository;
 import tn.telecom.mgmtbackend.repositories.OrganizationRepository;
 import tn.telecom.mgmtbackend.repositories.UserRepository;
 import tn.telecom.mgmtbackend.services.OrganizationService;
+import tn.telecom.mgmtbackend.services.RoleService;
 import tn.telecom.mgmtbackend.services.UserService;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,10 +36,15 @@ public class OrganizationServiceImpl implements OrganizationService {
     private UserServiceImpl userService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private BusinessSectorRepository businessSectorRepository;
 
     @Autowired
     private EmailServiceImpl emailService;
+
+    private final PasswordEncoder passwordEncoder;
     @Override
     public List<Organization> getOrganizations() {
         return organizationRepository.findAll();
@@ -69,7 +75,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     public void saveOrganization(String name, String code, Long sectorId, String email,
                                  String country, String region, String address, String phone,
                                  String directorFirstName, String directorLastName, String directorPhone,
-                                 String directorEmail,Long adminId, MultipartFile document, MultipartFile image) throws Exception{
+                                 String directorEmail, String adminUsername, String adminPwd,String adminFN,String adminLN,
+                                 Date adminDob, String adminGender,String adminPhone,String adminEmail, MultipartFile document, MultipartFile image) throws Exception{
 
         BusinessSector sector;
         if(sectorId != null){
@@ -81,10 +88,23 @@ public class OrganizationServiceImpl implements OrganizationService {
         Organization organization = new Organization(name,code,sector,email,country,region,address,phone, directorFirstName, directorLastName,  directorPhone,
                  directorEmail);
 
-        //it doesnt add the user to organization on database!!
-        User user = userRepository.getById(adminId);
-        System.out.println(user);
-        organization.setAdminOrg(user);
+        User admin = new User();
+        admin.setUsername(adminUsername);
+        admin.setPassword(adminPwd);
+        admin.setFirstName(adminFN);
+        admin.setLastName(adminLN);
+        admin.setDob(adminDob);
+        admin.setPhone(adminPhone);
+        admin.setGender(adminGender);
+        admin.setEmail(adminEmail);
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleService.getRoleByName("ADMIN"));
+        admin.setRoles(roles);
+
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        userRepository.save(admin);
+
+        organization.setAdminOrg(admin);
 
         if (image != null) {
             String imageName = StringUtils.cleanPath(image.getOriginalFilename());
@@ -99,6 +119,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             organization.setDocument(documentFile);
         }
         organizationRepository.save(organization);
+
+        admin.setOrganization(organization);
+        userRepository.save(admin);
 
     }
 
@@ -141,11 +164,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         Organization organization = new Organization(id,name,code,sector,email,country,region,address,phone, directorFirstName,  directorLastName,  directorPhone,
                 directorEmail);
         Organization existing_org;
-        if(organizationRepository.existsById(organization.getId())){
+        if (organizationRepository.findById(organization.getId()).isPresent()) {
+            existing_org = organizationRepository.findById(organization.getId()).get();
 
             Long replacedFileId = null;
 
-            existing_org = organizationRepository.getById(organization.getId());
             existing_org.setName(organization.getName());
             existing_org.setCode(organization.getCode());
             existing_org.setSector(organization.getSector());
@@ -188,16 +211,17 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public void activateOrganization(Long id) throws NotFoundException {
-        if (this.organizationRepository.existsById(id)) {
-            Organization existing_org = organizationRepository.getById(id);
-            //User user = userRepository.findByUsername(existing_org.getAdmin_org().getUsername());
+        if (organizationRepository.findById(id).isPresent()) {
+            Organization existing_org = organizationRepository.findById(id).get();
+            User user = userRepository.findByUsername(existing_org.getAdminOrg().getUsername());
             existing_org.setStatus(true);
-            //user.setIsActive(true);
+            user.setIsActive(true);
+            userRepository.save(user);
             organizationRepository.save(existing_org);
             System.out.println("beforeeeeeeeeee email (saved)");
             this.emailService.sendEmail(existing_org.getAdminOrg().getId());
             System.out.println("afteeeeeeeeeeeeeeeeeeeeeeeeer email (saved)");
-            //userRepository.save(user);
+
 
         } else {
             throw new NotFoundException();
@@ -206,15 +230,24 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public void rejectOrganization(Long id) throws NotFoundException {
-        if (this.organizationRepository.existsById(id)) {
-            Organization existing_org = organizationRepository.getById(id);
-            //User user = userRepository.findByUsername(existing_org.getAdmin_org().getUsername());
+        if (organizationRepository.findById(id).isPresent()) {
+            Organization existing_org = organizationRepository.findById(id).get();
+            User user = userRepository.findByUsername(existing_org.getAdminOrg().getUsername());
             existing_org.setStatus(false);
-            //user.setIsActive(true);
+            user.setIsActive(false);
             organizationRepository.save(existing_org);
-            //userRepository.save(user);
+            userRepository.save(user);
         } else {
             throw new NotFoundException();
         }
+    }
+
+    @Override
+    public User getOrganizationAdmin(Long id) {
+        if (organizationRepository.findById(id).isPresent()) {
+            Organization org = organizationRepository.findById(id).get();
+            return org.getAdminOrg();
+        }
+        return null;
     }
 }

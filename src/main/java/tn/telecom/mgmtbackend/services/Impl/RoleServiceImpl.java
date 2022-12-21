@@ -35,4 +35,9 @@ public class RoleServiceImpl implements RoleService {
     public void deleteRole(Long id) throws NotFoundException {
         this.roleRepository.deleteById(id);
     }
+
+    @Override
+    public Role getRoleByName(String name) {
+        return roleRepository.findByName(name);
+    }
 }

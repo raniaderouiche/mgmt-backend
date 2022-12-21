@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.User;
 import tn.telecom.mgmtbackend.services.UserService;
 
@@ -20,7 +21,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/users/all")
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
@@ -31,9 +32,14 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping("/users")
-    public User saveUser(@RequestBody User user){
-        return userService.saveUser(user);
+    @PostMapping("/users/create")
+    public void saveUser(@RequestBody User user){
+        userService.saveUser(user);
+    }
+
+    @PostMapping("/users/save")
+    public void saveUser(@RequestBody User user, @RequestParam("orgId") Long orgId) throws NotFoundException {
+        userService.saveUser(user,orgId);
     }
 
     @GetMapping("/user/profile")
@@ -47,5 +53,9 @@ public class UserController {
     public ResponseEntity<?> saveRole(@RequestParam(name = "username") String username, @RequestParam(name = "roleName") String roleName){
         userService.addRoleToUser(username,roleName);
         return ResponseEntity.ok().build();
+    }
+    @DeleteMapping("/users/{id}")
+    public void deleteUserById(@PathVariable(name = "id") Long id) throws NotFoundException {
+        userService.deleteUserById(id);
     }
 }
