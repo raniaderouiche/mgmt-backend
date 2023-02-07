@@ -3,6 +3,7 @@ package tn.telecom.mgmtbackend.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,11 +38,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
+//        http.authorizeRequests().antMatchers(HttpMethod.GET,"/sector/**").permitAll();
+//        http.authorizeRequests().antMatchers(HttpMethod.GET,"/organization/**").permitAll();
+//        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/users/**").permitAll();
+//
+//        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/sector/**").hasAnyAuthority("SUPER_ADMIN","ADMIN");
+//        http.authorizeRequests().antMatchers(HttpMethod.POST,"/sector/**").hasAnyAuthority("ADMIN","SUPER_ADMIN");
+//        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/sector/**").hasAnyAuthority("ADMIN","SUPER_ADMIN");
+//
+//        http.authorizeRequests().antMatchers(HttpMethod.POST,"/organization/**").hasAnyAuthority("SUPER_ADMIN");
+//        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/organization/**").hasAnyAuthority("SUPER_ADMIN");
+//        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/organization/**").hasAnyAuthority("SUPER_ADMIN");
+//
+//        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/users/**").hasAnyAuthority("SUPER_ADMIN");
+//        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/api/users/**").hasAnyAuthority("SUPER_ADMIN");
+//        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/api/users/**").hasAnyAuthority("SUPER_ADMIN");
+//
+//        http.authorizeRequests().antMatchers("/profession").hasAnyAuthority("SUPER_ADMIN","ADMIN");
+//        http.authorizeRequests().antMatchers("/type").hasAnyAuthority("SUPER_ADMIN","ADMIN");
+
         http.authorizeRequests().anyRequest().permitAll();
-        //http.authorizeRequests().antMatchers("/api/login/**","/token/refresh").permitAll();
-        //http.authorizeRequests().antMatchers("/api/users").hasAnyAuthority("ADMIN");
-        //http.authorizeRequests().anyRequest().authenticated();
-        //http.authorizeRequests().anyRequest().permitAll(); //set permissions roles here
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable().cors().configurationSource(corsConfigurationSource());

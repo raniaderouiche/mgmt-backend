@@ -1,6 +1,7 @@
 package tn.telecom.mgmtbackend.services.Impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tn.telecom.mgmtbackend.exceptions.AccountNotActiveException;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Organization;
 import tn.telecom.mgmtbackend.model.Role;
@@ -20,6 +22,7 @@ import tn.telecom.mgmtbackend.services.UserService;
 import tn.telecom.mgmtbackend.utils.UserUtils;
 
 import javax.transaction.Transactional;
+import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -36,12 +39,16 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     private OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null){
             log.error("User not found");
             throw new UsernameNotFoundException("User not found");
+        }else if (!user.getIsActive()){
+            log.error("Account not active");
+            throw new AccountNotActiveException();
         }else{
             log.info("User found : {}",username);
         }
@@ -114,6 +121,12 @@ public class UserServiceImpl implements UserService,UserDetailsService {
             throw new NotFoundException();
         }
 
+    }
+
+    @Override
+    public List<User> getUsersByOrg(String header) {
+        User user = UserUtils.getUserFromToken(header);
+        return this.userRepository.findUsersByOrganizationName(user.getOrganization().getName());
     }
 
 }

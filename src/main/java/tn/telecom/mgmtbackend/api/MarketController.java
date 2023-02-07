@@ -21,8 +21,9 @@ public class MarketController {
     private MarketService marketService;
 
     @GetMapping("/")
-    public List<Market> getMarkets(){
-        return marketService.getMarkets();
+    public List<Market> getMarkets(HttpServletRequest request){
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        return marketService.getMarkets(authorizationHeader);
     }
 
     @GetMapping("/{id}")
@@ -31,8 +32,9 @@ public class MarketController {
     }
 
     @GetMapping("/type/{type}")
-    public List<Market> getMarketsByType(@PathVariable(name = "type") String type) {
-        return marketService.getMarketsByType(type);
+    public List<Market> getMarketsByType(@PathVariable(name = "type") String type, HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        return marketService.getMarketsByType(type,authorizationHeader);
     }
 
     @PostMapping("/")

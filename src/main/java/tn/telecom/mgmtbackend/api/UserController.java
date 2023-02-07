@@ -27,6 +27,12 @@ public class UserController {
     }
 
 
+    @GetMapping("/users/by-org")
+    public ResponseEntity<List<User>> getUsersByOrg(HttpServletRequest request){
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        return ResponseEntity.ok().body(userService.getUsersByOrg(authorizationHeader));
+    }
+
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable(name = "id") Long id) {
         return userService.getUserById(id);

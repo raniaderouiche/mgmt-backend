@@ -17,4 +17,6 @@ public interface UserService {
 
     void saveUser(User user, Long orgId) throws NotFoundException;
 
+    List<User> getUsersByOrg(String header);
+
 }

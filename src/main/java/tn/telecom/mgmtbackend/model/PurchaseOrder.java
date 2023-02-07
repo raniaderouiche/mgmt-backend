@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @ToString
-public class PurchaseOrder {
+public class PurchaseOrder { // Bon de Commande
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +27,8 @@ public class PurchaseOrder {
     @Column(name="po_limit")
     private Double limit;
     private Date startDate;
+    private String type;
+    private Boolean isValid;
 
     @ManyToOne
     @JoinColumn(name="market_id")

@@ -5,12 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.DefinitiveOrder;
+import tn.telecom.mgmtbackend.model.ItemUsed;
 import tn.telecom.mgmtbackend.model.WorkOrder;
 import tn.telecom.mgmtbackend.repositories.DefinitiveOrderRepository;
 import tn.telecom.mgmtbackend.repositories.WorkOrderRepository;
 import tn.telecom.mgmtbackend.services.DefinitiveOrderService;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +45,18 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
         System.out.println("WORKID" + workOrder.getId());
         definitiveOrder.setWorkOrder(workOrder);
         this.definitiveOrderRepository.save(definitiveOrder);
+        workOrder = this.workOrderRepository.getById(workOrderID);
+        Long total = 0L;
+        for (DefinitiveOrder order : workOrder.getDefinitiveOrders()){
+            for (ItemUsed item : workOrder.getPurchaseOrder().getItemsUsed()){
+                if(Objects.equals(item.getItem().getId(), order.getItem().getId())){
+                    total = total + (item.getPrice() * order.getQuantity());
+                    break;
+                }
+            }
+        }
+        workOrder.setAmount(total);
+        this.workOrderRepository.save(workOrder);
     }
 
     @Override

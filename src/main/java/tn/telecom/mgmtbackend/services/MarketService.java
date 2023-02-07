@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface MarketService {
 
-    List<Market> getMarkets();
-    List<Market> getMarketsByType( String type);
+    List<Market> getMarkets(String header);
+    List<Market> getMarketsByType(String type,String header);
     void saveMarket(Market market,String header);
     void deleteMarket(Long id) throws NotFoundException;
     Market getMarketById(Long id);

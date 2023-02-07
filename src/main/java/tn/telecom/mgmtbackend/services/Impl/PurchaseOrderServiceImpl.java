@@ -10,6 +10,8 @@ import tn.telecom.mgmtbackend.repositories.PurchaseOrderRepository;
 import tn.telecom.mgmtbackend.repositories.WorkOrderRepository;
 import tn.telecom.mgmtbackend.services.PurchaseOrderService;
 
+import java.time.Year;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public void savePurchaseOrder(PurchaseOrder order) {
+        purchaseOrderRepository.save(order);
+        order.setCode(order.getId()+"BC"+Year.now().getValue());
         purchaseOrderRepository.save(order);
     }
 
