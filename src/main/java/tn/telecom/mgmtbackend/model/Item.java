@@ -25,6 +25,7 @@ public class Item {
     @Column(unique = true)
     private String name;
 
+    @Column(unique = true)
     private String code;
     private String item_class;
     private String unit; // this should be removed

@@ -49,4 +49,8 @@ public class PurchaseOrder { // Bon de Commande
     @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Delivery> deliveries;
+
+    @ManyToOne
+    @JoinColumn(name="org_id")
+    private Organization organization;
 }

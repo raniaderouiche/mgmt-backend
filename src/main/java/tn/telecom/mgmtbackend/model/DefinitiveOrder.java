@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @ToString
+// article d'OT
 public class DefinitiveOrder {
 
     @Id

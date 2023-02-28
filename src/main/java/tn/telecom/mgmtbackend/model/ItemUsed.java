@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @ToString
+// article de BC
 public class ItemUsed {
 
     @Id

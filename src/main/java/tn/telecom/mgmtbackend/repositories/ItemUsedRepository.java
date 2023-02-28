@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ItemUsedRepository extends JpaRepository<ItemUsed, Long> {
     List<ItemUsed> findItemUsedsByPurchaseOrderId(Long id);
+    ItemUsed findItemUsedByItemIdAndPurchaseOrderId(Long item_id,Long order_id);
 }

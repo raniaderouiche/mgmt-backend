@@ -23,6 +23,11 @@ public class ItemUsedServiceImpl implements ItemUsedService {
 
     @Override
     public void saveItemUsed(ItemUsed itemUsed) {
+        ItemUsed oldValue = this.itemUsedRepository.findItemUsedByItemIdAndPurchaseOrderId(itemUsed.getItem().getId(),itemUsed.getPurchaseOrder().getId());
+        if(oldValue!=null){
+            oldValue.setQuantity(itemUsed.getQuantity() + oldValue.getQuantity());
+            itemUsed = oldValue;
+        }
         this.itemUsedRepository.save(itemUsed);
     }
 

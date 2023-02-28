@@ -42,8 +42,13 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
     @Override
     public void saveDefinitiveOrder(DefinitiveOrder definitiveOrder,Long workOrderID) {
         WorkOrder workOrder = this.workOrderRepository.getById(workOrderID);
-        System.out.println("WORKID" + workOrder.getId());
-        definitiveOrder.setWorkOrder(workOrder);
+        DefinitiveOrder oldOrder = this.definitiveOrderRepository.findDefinitiveOrdersByItemIdAndWorkOrderId(definitiveOrder.getItem().getId(),workOrderID);
+        if(oldOrder!=null){
+            oldOrder.setQuantity(definitiveOrder.getQuantity() + oldOrder.getQuantity());
+            definitiveOrder = oldOrder;
+        }else{
+            definitiveOrder.setWorkOrder(workOrder);
+        }
         this.definitiveOrderRepository.save(definitiveOrder);
         workOrder = this.workOrderRepository.getById(workOrderID);
         Long total = 0L;
