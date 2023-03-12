@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ItemRealisedRepository extends JpaRepository<ItemRealised, Long> {
     List<ItemRealised> findByAttachmentId(Long id);
+    ItemRealised findItemRealisedByItemIdAndAttachmentId(Long item_id, Long att_id);
 }

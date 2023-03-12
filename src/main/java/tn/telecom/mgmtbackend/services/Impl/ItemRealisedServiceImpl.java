@@ -44,11 +44,16 @@ public class ItemRealisedServiceImpl implements ItemRealisedService {
     @Override
     public void saveItemRealised(Long attachmentId, ItemRealised itemRealised) {
         Attachment attachment = new Attachment();
-        if(attachmentRepository.findById(attachmentId).isPresent()){
-            attachment = attachmentRepository.findById(attachmentId).get();
+        ItemRealised oldValue = itemRealisedRepository.findItemRealisedByItemIdAndAttachmentId(itemRealised.getItem().getId(),attachmentId);
+        if(oldValue!=null){
+            oldValue.setQuantity(itemRealised.getQuantity() + oldValue.getQuantity());
+            itemRealised = oldValue;
+        }else{
+            if(attachmentRepository.findById(attachmentId).isPresent()){
+                attachment = attachmentRepository.findById(attachmentId).get();
+            }
+            itemRealised.setAttachment(attachment);
         }
-
-        itemRealised.setAttachment(attachment);
         this.itemRealisedRepository.save(itemRealised);
     }
 

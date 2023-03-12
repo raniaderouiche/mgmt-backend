@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
+@ToString // article de BL
 public class ItemDelivered {
 
     @Id
