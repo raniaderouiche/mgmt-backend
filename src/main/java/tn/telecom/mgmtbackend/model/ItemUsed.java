@@ -20,7 +20,7 @@ public class ItemUsed {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long quantity;
+    private Double quantity;
     private Long price;
 
     @ManyToOne

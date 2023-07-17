@@ -20,7 +20,7 @@ public class DefinitiveOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long quantity;
+    private Double quantity;
 
     @ManyToOne
     @JoinColumn(name="workOrder_id")
