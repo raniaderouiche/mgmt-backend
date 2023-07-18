@@ -24,6 +24,10 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public void saveDelivery(Delivery item) {
+        if(item.getId() == null){
+            item.setAmount((double) 0);
+        }
+        System.out.println(item);
         deliveryRepository.save(item);
     }
 

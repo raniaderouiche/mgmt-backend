@@ -51,7 +51,7 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
         }
         this.definitiveOrderRepository.save(definitiveOrder);
         workOrder = this.workOrderRepository.getById(workOrderID);
-        Long total = 0L;
+        double total = 0L;
         for (DefinitiveOrder order : workOrder.getDefinitiveOrders()){
             for (ItemUsed item : workOrder.getPurchaseOrder().getItemsUsed()){
                 if(Objects.equals(item.getItem().getId(), order.getItem().getId())){

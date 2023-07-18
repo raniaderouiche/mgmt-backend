@@ -10,4 +10,6 @@ import java.util.List;
 public interface ItemDeliveredRepository extends JpaRepository<ItemDelivered,Long> {
 
     List<ItemDelivered> findByDeliveryId(Long id);
+
+    ItemDelivered findItemDeliveredByItemIdAndDeliveryId(Long item_id, Long att_id);
 }

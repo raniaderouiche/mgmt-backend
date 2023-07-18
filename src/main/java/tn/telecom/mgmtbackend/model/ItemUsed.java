@@ -21,7 +21,7 @@ public class ItemUsed {
     private Long id;
 
     private Double quantity;
-    private Long price;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name="purchaseOrder_id")

@@ -35,7 +35,7 @@ public class WorkOrder {
     private Long limit;
 
     @Column(name="workOrder_amount")
-    private Long amount;
+    private Double amount;
 
     @ManyToOne
     @JoinColumn(name = "purchaseOrder_id")

@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 public class Delivery {
 
     @Id
@@ -41,4 +40,15 @@ public class Delivery {
     @ManyToOne
     @JoinColumn(name="workOrder_id")
     private WorkOrder workOrder;
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", creationDate=" + creationDate +
+                ", deliveryDate=" + deliveryDate +
+                ", amount=" + amount +
+                '}';
+    }
 }
