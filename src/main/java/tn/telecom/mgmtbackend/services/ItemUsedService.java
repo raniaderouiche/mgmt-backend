@@ -9,4 +9,6 @@ public interface ItemUsedService {
     List<ItemUsed> getItemsUsedByPurchaseOrder(Long id);
     void saveItemUsed(ItemUsed itemUsed);
     void deleteItemUsed(Long id) throws NotFoundException;
+
+    void editItemUsed(ItemUsed itemUsed);
 }

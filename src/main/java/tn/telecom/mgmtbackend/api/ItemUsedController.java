@@ -34,6 +34,13 @@ public class ItemUsedController {
         itemUsedService.saveItemUsed(itemUsed);
     }
 
+    @PatchMapping("/{id}")
+    public void editItemUsed(@PathVariable(name = "id") Long orderID,@RequestBody ItemUsed itemUsed){
+        PurchaseOrder order = purchaseOrderService.getPurchaseOrderByID(orderID);
+        itemUsed.setPurchaseOrder(order);
+        itemUsedService.editItemUsed(itemUsed);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteItemUsed(@PathVariable(name = "id") Long id) throws NotFoundException {
         itemUsedService.deleteItemUsed(id);

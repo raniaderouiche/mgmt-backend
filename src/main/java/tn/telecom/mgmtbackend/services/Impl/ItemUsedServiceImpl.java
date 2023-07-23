@@ -39,4 +39,9 @@ public class ItemUsedServiceImpl implements ItemUsedService {
             throw new NotFoundException();
         }
     }
+
+    @Override
+    public void editItemUsed(ItemUsed itemUsed) {
+        this.itemUsedRepository.save(itemUsed);
+    }
 }

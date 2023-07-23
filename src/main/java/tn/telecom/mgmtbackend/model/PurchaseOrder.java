@@ -22,6 +22,7 @@ public class PurchaseOrder { // Bon de Commande
     private Long id;
 
     private String code;
+    private String num;
     @Column(name="po_amount")
     private Double amount;
     @Column(name="po_limit")
