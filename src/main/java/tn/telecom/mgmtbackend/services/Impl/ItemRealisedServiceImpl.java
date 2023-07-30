@@ -70,4 +70,14 @@ public class ItemRealisedServiceImpl implements ItemRealisedService {
     public List<ItemRealised> getItemsRealisedByAttachmentID(Long id) {
         return itemRealisedRepository.findByAttachmentId(id);
     }
+
+    @Override
+    public void editItemRealised(Long attachmentId, ItemRealised itemRealised) {
+        Attachment attachment = new Attachment();
+        if(attachmentRepository.findById(attachmentId).isPresent()){
+            attachment = attachmentRepository.findById(attachmentId).get();
+        }
+        itemRealised.setAttachment(attachment);
+        this.itemRealisedRepository.save(itemRealised);
+    }
 }

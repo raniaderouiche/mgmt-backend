@@ -1,5 +1,6 @@
 package tn.telecom.mgmtbackend.services;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.web.multipart.MultipartFile;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.Organization;
@@ -34,5 +35,7 @@ public interface OrganizationService {
     void rejectOrganization(Long id) throws NotFoundException;
 
     User getOrganizationAdmin(Long id);
+
+    void saveOrganizationObject(Organization organization);
 
 }

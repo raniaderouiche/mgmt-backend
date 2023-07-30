@@ -250,4 +250,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
         return null;
     }
+
+    @Override
+    public void saveOrganizationObject(Organization organization) {
+        organizationRepository.save(organization);
+    }
 }

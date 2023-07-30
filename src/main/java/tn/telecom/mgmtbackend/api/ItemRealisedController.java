@@ -42,4 +42,10 @@ public class ItemRealisedController {
     public List<ItemRealised> getItemsRealisedByAttachmentId(@PathVariable(name = "id") Long id){
         return itemRealisedService.getItemsRealisedByAttachmentID(id);
     }
+
+    @PatchMapping("/")
+    public void editItemRealised(@RequestParam("attachmentId")Long attachmentId,
+                                 @RequestBody ItemRealised itemRealised){
+        itemRealisedService.editItemRealised(attachmentId,itemRealised);
+    }
 }

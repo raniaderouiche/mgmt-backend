@@ -13,4 +13,6 @@ public interface ItemRealisedService {
     void deleteItemRealised(Long id) throws NotFoundException;
 
     List<ItemRealised> getItemsRealisedByAttachmentID(Long id);
+
+    void editItemRealised(Long attachmentId, ItemRealised itemRealised);
 }

@@ -23,18 +23,29 @@ public class MgmtBackendApplication {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    CommandLineRunner run(UserService userService, RoleService roleService, BusinessSectorService sectorService, ProfessionService professionService, TypeService typeService){
+    /*@Bean
+    CommandLineRunner run(UserService userService, RoleService roleService,OrganizationService organizationService, BusinessSectorService sectorService, ProfessionService professionService, TypeService typeService){
         return args -> {
-            /*roleService.saveRole(new Role(null,"SUPER_ADMIN"));
+            roleService.saveRole(new Role(null,"SUPER_ADMIN"));
             roleService.saveRole(new Role(null,"ADMIN"));
             roleService.saveRole(new Role(null,"USER"));
+
+            Organization organization = new Organization();
+            organization.setName("ADMIN");
+            organization.setStatus(true);
+            organizationService.saveOrganizationObject(organization);
+
             User user = new User();
             user.setUsername("admin");
             user.setPassword("admin");
             user.setEmail("rania.derouiche@gmail.com");
+            user.setIsActive(true);
+            user.setOrganization(organization);
             userService.saveUser(user);
             userService.addRoleToUser("admin","SUPER_ADMIN");
+
+            organization.setAdminOrg(user);
+            organizationService.saveOrganizationObject(organization);
 
             // data for testing
             BusinessSector sector = new BusinessSector();
@@ -46,8 +57,8 @@ public class MgmtBackendApplication {
             Profession profession = new Profession();
             profession.setName("TEST");
             profession.setSector(sector);
-            professionService.saveProfession(profession);*/
+            professionService.saveProfession(profession);
         };
-    }
+    }*/
 
 }
