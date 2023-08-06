@@ -29,7 +29,9 @@ public class PurchaseOrder { // Bon de Commande
     private Double limit;
     private Date startDate;
     private String type;
-    private Boolean isValid;
+    private String region;
+    private String validationState;
+    private String rejectionMotive;
 
     @ManyToOne
     @JoinColumn(name="market_id")
