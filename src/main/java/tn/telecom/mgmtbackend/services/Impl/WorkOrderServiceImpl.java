@@ -48,18 +48,8 @@ public class WorkOrderServiceImpl implements WorkOrderService {
         workOrder.setPurchaseOrder(purchaseOrder);
         workOrder.setOrderDate(new Date());
         this.workOrderRepository.save(workOrder);
-        workOrder.setCode(workOrder.getId()+"/"+ workOrder.getPurchaseOrder().getCode());
-//        Long total = 0L;
-//        for (DefinitiveOrder order : workOrder.getDefinitiveOrders()){
-//            for (ItemUsed item : workOrder.getPurchaseOrder().getItemsUsed()){
-//                if(Objects.equals(item.getItem().getId(), order.getItem().getId())){
-//                    total = total + (item.getPrice() * order.getQuantity());
-//                    break;
-//                }
-//            }
-//        }
-//        workOrder.setAmount(total);
-        this.workOrderRepository.save(workOrder);
+        /*workOrder.setCode(workOrder.getId()+"/"+ workOrder.getPurchaseOrder().getCode());
+        this.workOrderRepository.save(workOrder);*/
     }
 
     @Override
@@ -74,5 +64,12 @@ public class WorkOrderServiceImpl implements WorkOrderService {
     @Override
     public List<WorkOrder> getWorkOrdersByOrderId(Long id){
         return this.workOrderRepository.findWorkOrdersByPurchaseOrderId(id);
+    }
+
+    @Override
+    public void editWorkOrder(WorkOrder workOrder, Long purchaseOrderId) {
+        PurchaseOrder purchaseOrder = this.purchaseOrderService.getPurchaseOrderByID(purchaseOrderId);
+        workOrder.setPurchaseOrder(purchaseOrder);
+        this.workOrderRepository.save(workOrder);
     }
 }

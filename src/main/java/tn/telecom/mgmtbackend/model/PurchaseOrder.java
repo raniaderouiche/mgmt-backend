@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 public class PurchaseOrder { // Bon de Commande
 
     @Id
@@ -56,4 +55,20 @@ public class PurchaseOrder { // Bon de Commande
     @ManyToOne
     @JoinColumn(name="org_id")
     private Organization organization;
+
+    @Override
+    public String toString() {
+        return "PurchaseOrder{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", num='" + num + '\'' +
+                ", amount=" + amount +
+                ", limit=" + limit +
+                ", startDate=" + startDate +
+                ", type='" + type + '\'' +
+                ", region='" + region + '\'' +
+                ", validationState='" + validationState + '\'' +
+                ", rejectionMotive='" + rejectionMotive + '\'' +
+                '}';
+    }
 }

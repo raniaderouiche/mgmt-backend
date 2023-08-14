@@ -39,4 +39,9 @@ public class WorkOrderController {
     public List<WorkOrder> getWorkOrdersByOrderId(@PathVariable(name = "id") Long id){
         return workOrderService.getWorkOrdersByOrderId(id);
     }
+
+    @PatchMapping("/{purchaseOrderId}")
+    public void editWorkOrder(@PathVariable(name = "purchaseOrderId") Long purchaseOrderId, @RequestBody WorkOrder workOrder){
+        workOrderService.editWorkOrder(workOrder, purchaseOrderId);
+    }
 }

@@ -12,4 +12,6 @@ public interface DefinitiveOrderService {
     void deleteDefinitiveOrder(Long id) throws NotFoundException;
 
     List<DefinitiveOrder> getDefinitiveOrdersById(Long id);
+
+    void editDefinitiveOrder(DefinitiveOrder definitiveOrder,Long workOrderID);
 }

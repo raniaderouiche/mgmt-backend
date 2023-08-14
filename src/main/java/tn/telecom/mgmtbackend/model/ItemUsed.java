@@ -12,7 +12,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 // article de BC
 public class ItemUsed {
 
@@ -31,4 +30,14 @@ public class ItemUsed {
     @ManyToOne
     @JoinColumn(name="item_id")
     private Item item;
+
+    @Override
+    public String toString() {
+        return "ItemUsed{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", purchaseOrder=" + purchaseOrder +
+                '}';
+    }
 }

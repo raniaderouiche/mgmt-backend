@@ -13,4 +13,6 @@ public interface WorkOrderService {
     void deleteWorkOrder(Long id) throws NotFoundException;
     List<WorkOrder> getWorkOrdersByOrderId(Long id);
 
+    void editWorkOrder(WorkOrder workOrder, Long purchaseOrderId);
+
 }

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.telecom.mgmtbackend.exceptions.NotFoundException;
 import tn.telecom.mgmtbackend.model.DefinitiveOrder;
+import tn.telecom.mgmtbackend.model.ItemUsed;
+import tn.telecom.mgmtbackend.model.PurchaseOrder;
 import tn.telecom.mgmtbackend.services.DefinitiveOrderService;
 
 import java.util.List;
@@ -38,5 +40,10 @@ public class DefinitiveOrderController {
     @GetMapping("/filter")
     public List<DefinitiveOrder> getDefinitiveOrdersByWorkOrderId(@RequestParam(name = "workorderID") Long id){
         return definitiveOrderService.getDefinitiveOrdersById(id);
+    }
+
+    @PatchMapping("/{id}")
+    public void editDefinitiveOrder(@PathVariable(name = "id") Long workOrderID,@RequestBody DefinitiveOrder definitiveOrder){
+        definitiveOrderService.editDefinitiveOrder(definitiveOrder,workOrderID);
     }
 }

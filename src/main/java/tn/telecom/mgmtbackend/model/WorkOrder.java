@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 //Ordre de Traveaux
 public class WorkOrder {
 
@@ -43,7 +42,7 @@ public class WorkOrder {
     private PurchaseOrder purchaseOrder;
 
 
-    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<DefinitiveOrder> definitiveOrders;
 
     @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL)
@@ -54,4 +53,16 @@ public class WorkOrder {
     @JsonIgnore
     private List<Delivery> deliveries;
 
+
+    @Override
+    public String toString() {
+        return "WorkOrder{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", orderDate=" + orderDate +
+                ", startDate=" + startDate +
+                ", limit=" + limit +
+                ", amount=" + amount +
+                '}';
+    }
 }

@@ -63,4 +63,16 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         System.out.println("ORDER = " + workOrder.getPurchaseOrder().getId());
         return workOrder.getPurchaseOrder();
     }
+
+    @Override
+    public void changeOrderValidationState(Long id,String state) {
+        PurchaseOrder order;
+        if(this.purchaseOrderRepository.findById(id).isPresent()) {
+            order = this.purchaseOrderRepository.findById(id).get();
+            order.setValidationState(state);
+            System.out.println("***** STATE CHANGED ****");
+            this.purchaseOrderRepository.save(order);
+            System.out.println(order.getValidationState());
+        }
+    }
 }

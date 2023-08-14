@@ -12,7 +12,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 // article d'OT
 public class DefinitiveOrder {
 
@@ -30,4 +29,14 @@ public class DefinitiveOrder {
     @ManyToOne
     @JoinColumn(name="item_id")
     private Item item;
+
+    @Override
+    public String toString() {
+        return "DefinitiveOrder{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", workOrder=" + workOrder +
+                ", item=" + item +
+                '}';
+    }
 }

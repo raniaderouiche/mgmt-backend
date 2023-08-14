@@ -35,43 +35,22 @@ public class ItemUsedServiceImpl implements ItemUsedService {
             itemUsed = oldValue;
         }
         this.itemUsedRepository.save(itemUsed);
-
-        changeValidationState(itemUsed.getPurchaseOrder());
     }
 
     @Override
     public void deleteItemUsed(Long id) throws NotFoundException {
-        PurchaseOrder purchaseOrder;
         if(itemUsedRepository.findById(id).isPresent()){
-            ItemUsed itemUsed = itemUsedRepository.findById(id).get();
-            purchaseOrder = itemUsed.getPurchaseOrder();
             itemUsedRepository.deleteById(id);
         }else {
             throw new NotFoundException();
         }
 
-        changeValidationState(purchaseOrder);
-    }
-
-    public void changeValidationState(PurchaseOrder purchaseOrder) {
-        if(Objects.equals(purchaseOrder.getAmount(), getItemsTotal(purchaseOrder))){
-            purchaseOrder.setValidationState("En attente");
-        }else{
-            purchaseOrder.setValidationState("Invalide");
-        }
-        purchaseOrderRepository.save(purchaseOrder);
-        System.out.println("Saved");
     }
 
     @Override
     public void editItemUsed(ItemUsed itemUsed) {
         this.itemUsedRepository.save(itemUsed);
-        changeValidationState(itemUsed.getPurchaseOrder());
+
     }
 
-    public Double getItemsTotal(PurchaseOrder order){
-        return order.getItemsUsed().stream()
-                .mapToDouble(ItemUsed::getPrice)
-                .reduce(0.0, Double::sum);
-    }
 }

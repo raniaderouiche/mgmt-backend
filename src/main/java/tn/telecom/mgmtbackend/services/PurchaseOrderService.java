@@ -14,4 +14,6 @@ public interface PurchaseOrderService {
     PurchaseOrder getPurchaseOrderByID(Long id);
 
     PurchaseOrder getPurchaseOrderByWorkOrderID(Long id);
+
+    void changeOrderValidationState(Long id,String state);
 }

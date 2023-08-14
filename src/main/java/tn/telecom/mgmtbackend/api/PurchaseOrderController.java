@@ -46,4 +46,9 @@ public class PurchaseOrderController {
     public PurchaseOrder getPurchaseOrderByWorkOrderID(@PathVariable(name = "id") Long id){
         return purchaseOrderService.getPurchaseOrderByWorkOrderID(id);
     }
+
+    @PostMapping("/{id}")
+    public void changeOrderValidationState(@PathVariable(name = "id") Long id, @RequestParam("state") String state){
+        purchaseOrderService.changeOrderValidationState(id,state);
+    }
 }
