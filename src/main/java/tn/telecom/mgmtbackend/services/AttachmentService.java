@@ -15,4 +15,8 @@ public interface AttachmentService {
     List<Attachment> getAttachmentsByOrderId(Long id);
 
     List<Attachment> getAttachmentsByWorkOrderId(Long id);
+
+    Double getAttachmentsSumAmount();
+
+    Double getAttachmentsSumAmountByMarket(Long id);
 }

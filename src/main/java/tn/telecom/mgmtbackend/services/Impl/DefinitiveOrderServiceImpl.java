@@ -50,7 +50,7 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
             definitiveOrder.setWorkOrder(workOrder);
         }
         this.definitiveOrderRepository.save(definitiveOrder);
-       /* workOrder = this.workOrderRepository.getById(workOrderID);
+        workOrder = this.workOrderRepository.getById(workOrderID);
         double total = 0L;
         for (DefinitiveOrder order : workOrder.getDefinitiveOrders()){
             for (ItemUsed item : workOrder.getPurchaseOrder().getItemsUsed()){
@@ -61,7 +61,7 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
             }
         }
         workOrder.setAmount(total);
-        this.workOrderRepository.save(workOrder);*/
+        this.workOrderRepository.save(workOrder);
     }
 
     @Override
@@ -83,5 +83,17 @@ public class DefinitiveOrderServiceImpl implements DefinitiveOrderService {
         WorkOrder workOrder = this.workOrderRepository.getById(workOrderID);
         definitiveOrder.setWorkOrder(workOrder);
         this.definitiveOrderRepository.save(definitiveOrder);
+        workOrder = this.workOrderRepository.getById(workOrderID);
+        double total = 0L;
+        for (DefinitiveOrder order : workOrder.getDefinitiveOrders()){
+            for (ItemUsed item : workOrder.getPurchaseOrder().getItemsUsed()){
+                if(Objects.equals(item.getItem().getId(), order.getItem().getId())){
+                    total = total + (item.getPrice() * order.getQuantity());
+                    break;
+                }
+            }
+        }
+        workOrder.setAmount(total);
+        this.workOrderRepository.save(workOrder);
     }
 }

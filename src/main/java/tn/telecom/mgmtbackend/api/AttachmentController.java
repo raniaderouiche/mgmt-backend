@@ -43,4 +43,14 @@ public class AttachmentController {
     public List<Attachment> getAttachmentByWorkOrderId(@PathVariable(name = "id") Long id){
         return attachmentService.getAttachmentsByWorkOrderId(id);
     }
+
+    @GetMapping("/sum")
+    public Double getAttachmentSumAmount(){
+        return attachmentService.getAttachmentsSumAmount();
+    }
+
+    @GetMapping("/sum/market/{id}")
+    public Double getAttachmentSumAmountByMarket(@PathVariable(name = "id") Long id){
+        return attachmentService.getAttachmentsSumAmountByMarket(id);
+    }
 }
