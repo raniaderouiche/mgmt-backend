@@ -218,9 +218,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             user.setIsActive(true);
             userRepository.save(user);
             organizationRepository.save(existing_org);
-            System.out.println("beforeeeeeeeeee email (saved)");
+            /*System.out.println("beforeeeeeeeeee email (saved)");
             this.emailService.sendVerificationEmail(existing_org.getAdminOrg().getId());
-            System.out.println("afteeeeeeeeeeeeeeeeeeeeeeeeer email (saved)");
+            System.out.println("afteeeeeeeeeeeeeeeeeeeeeeeeer email (saved)");*/
 
 
         } else {

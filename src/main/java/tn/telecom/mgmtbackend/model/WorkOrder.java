@@ -24,6 +24,8 @@ public class WorkOrder {
 
     private String code;
 
+    private String description;
+
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date orderDate;
 
